@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
@@ -22,6 +25,20 @@ public class StoryView : MonoBehaviour
    
    [SerializeField] 
    private TextMeshProUGUI speakerName;
+
+   [SerializeField]
+   private Image speakerImage;
+   
+   [SerializeField]
+   private List<SpeakerConfig> speakerConfigs;
+   
+   [Serializable]
+
+   public class SpeakerConfig
+   {
+      public string name;
+      public Sprite sprite;
+   }
    
    private void Awake()
    {
@@ -65,14 +82,14 @@ public class StoryView : MonoBehaviour
          for (int i = 0; i < story.currentChoices.Count; i++)
          {
             Choice choice = story.currentChoices[i];
-            Button button = CreateChoiceView(choice.text.Trim());
+            Button button = CreateChoiceView(choice.text.Trim(), i);
             button.onClick.AddListener(() => OnClickChoiceButton(choice));
 
          }
       }
       else
       {
-         Button choice = CreateChoiceView("Continue");
+         Button choice = CreateChoiceView("Continue", 0);
          choice.onClick.AddListener(CloseStory);
       }
    }
@@ -94,22 +111,42 @@ public class StoryView : MonoBehaviour
       }
 
    private void CreateContentView(string text)
+   {
+      var speaker = story.globalTags.FirstOrDefault(t => t.Contains("speaker"))?.Split(' ')[1];
+      speakerName.text = speaker;
+      speakerImage.sprite = GetSpeakerImage(speaker);
+      StartCoroutine(ShowTextLetterByLetter(text));
+   }
+
+   private Sprite GetSpeakerImage(string speaker)
+   {
+      return speakerConfigs.FirstOrDefault(s => s.name == speaker)?.sprite;
+   }
+
+   IEnumerator ShowTextLetterByLetter(string text)
+   {
+      storyText.text = text;
+      storyText.maxVisibleCharacters = 0;
+      for (int i = 0; i <= text.Length; i++)
       {
-         string[] parts = text.Split(':');
-         if (parts.Length >= 2)
+         storyText.maxVisibleCharacters = i;
+         if (Keyboard.current.spaceKey.wasPressedThisFrame)
          {
-            speakerName.text = parts[0];
-            storyText.text = parts[1];
+            storyText.maxVisibleCharacters = text.Length;
+            yield break;
          }
-         else
-         {
-            speakerName.text = string.Empty;
-            storyText.text = text;
-         }
+
+         yield return new WaitForSeconds(0.025f);
       }
-   private Button CreateChoiceView(string text)
+   }
+   
+   private Button CreateChoiceView(string text, int index)
              {
                 var choice = Instantiate(buttonPrefab, choiceHolder.transform, false);
+                if (index == 0)
+                {
+                   choice.Select();
+                }
        
                 var choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
                 choiceText.text = text;
