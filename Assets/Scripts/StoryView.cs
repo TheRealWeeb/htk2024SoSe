@@ -153,5 +153,16 @@ public class StoryView : MonoBehaviour
        
                 return choice;
              }
+
+   private void Update()
+   {
+      if (Input.GetKeyDown(KeyCode.Escape))
+      {
+         Cursor.visible = false;
+         Cursor.lockState = CursorLockMode.Locked;
+         FindObjectOfType<PlayerInput>().enabled = true;
+         gameObject.SetActive(false);
+      }
+   }
    
 }

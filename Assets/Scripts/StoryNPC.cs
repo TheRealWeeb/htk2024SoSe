@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StoryNPC : MonoBehaviour, IInteractable
 {
-   [SerializeField] private TextAsset story;
+   [SerializeField]
+   private TextAsset story;
 
    public void Interact()
    {

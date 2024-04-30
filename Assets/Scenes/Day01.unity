@@ -11376,6 +11376,7 @@ MonoBehaviour:
   pausePanel: {fileID: 589248487}
   mainMenuButton: {fileID: 888097714}
   buildIndex: 0
+  dialogueMenu: {fileID: 417316554}
 --- !u!114 &263419231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19471,8 +19472,8 @@ GameObject:
   - component: {fileID: 446311121}
   - component: {fileID: 446311120}
   - component: {fileID: 446311119}
-  - component: {fileID: 446311118}
   - component: {fileID: 446311117}
+  - component: {fileID: 446311118}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged

@@ -19,6 +19,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private int buildIndex;
 
+    [SerializeField]
+    private GameObject dialogueMenu;
+
     private void Awake()
     {
         pausePanel.SetActive(false);
@@ -28,7 +31,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && dialogueMenu.activeSelf == false)
         {
             var wasPreviouslyPaused = pausePanel.activeSelf;
             SetPausedStatus(!wasPreviouslyPaused);
