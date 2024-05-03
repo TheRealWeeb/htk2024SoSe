@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace;
+using DG.Tweening;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SearchService;
 using UnityEngine.UI;
 
 
@@ -14,26 +17,21 @@ public class StoryView : MonoBehaviour
    public static event Action<Story> OnCreateStory;
    private Story story;
    
-   [SerializeField] 
-   private TextMeshProUGUI storyText;
+   [SerializeField] private TextMeshProUGUI storyText;
 
-   [SerializeField]
-   private Button buttonPrefab;
+   [SerializeField] private Button buttonPrefab;
 
-   [SerializeField] 
-   private RectTransform choiceHolder;
+   [SerializeField] private RectTransform choiceHolder;
    
-   [SerializeField] 
-   private TextMeshProUGUI speakerName;
+   [SerializeField] private TextMeshProUGUI speakerName;
 
-   [SerializeField]
-   private Image speakerImage;
+   [SerializeField] private Image speakerImage;
    
-   [SerializeField]
-   private List<SpeakerConfig> speakerConfigs;
+   [SerializeField] private QuestsConfig questConfig;
+   
+   [SerializeField] private List<SpeakerConfig> speakerConfigs;
    
    [Serializable]
-
    public class SpeakerConfig
    {
       public string name;
@@ -75,6 +73,7 @@ public class StoryView : MonoBehaviour
          string text = story.Continue();
          text = text.Trim();
          CreateContentView(text);
+         HandleTags();
       }
 
       if (story.currentChoices.Count > 0)
@@ -141,18 +140,24 @@ public class StoryView : MonoBehaviour
    }
    
    private Button CreateChoiceView(string text, int index)
-             {
-                var choice = Instantiate(buttonPrefab, choiceHolder.transform, false);
-                if (index == 0)
-                {
-                   choice.Select();
-                }
+   {
+      var choice = Instantiate(buttonPrefab, choiceHolder.transform, false);
+      if (index == 0)
+      {
+         choice.Select();
+      }
+
+      choice.transform
+         .DOScale(1f, 0.5f)
+         .SetEase(Ease.OutBack)
+         .From(0f)
+         .SetDelay(index * 0.2f);
        
-                var choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
-                choiceText.text = text;
+      var choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
+      choiceText.text = text;
        
-                return choice;
-             }
+      return choice;
+   }
 
    private void Update()
    {
@@ -164,5 +169,30 @@ public class StoryView : MonoBehaviour
          gameObject.SetActive(false);
       }
    }
-   
+
+   private void HandleTags()
+   {
+      if (story.currentTags.Count <= 0)
+      {
+         return;
+      }
+
+      foreach (var currentTag in story.currentTags)
+      {
+         if (currentTag.Contains("addQuest"))
+         {
+            var questName = currentTag.Split(' ')[1];
+            var quest = questConfig.quests.First(q => q.GetId() == questName);
+            GameState.StartQuest(quest);
+            FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
+         }
+
+         if (currentTag.Contains("removeQuest"))
+         {
+            var questName = currentTag.Split(' ')[1];
+            GameState.RemoveQuest(questName);
+            FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
+         }
+      }
+   }
 }

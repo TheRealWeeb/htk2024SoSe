@@ -1,15 +1,39 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class LocationInteractor : MonoBehaviour
 {
-    private void OnTriggerStay(Collider other)
+    [CanBeNull] private IInteractable? _currentInteractable;
+
+    private void Update()
     {
-        if (other.TryGetComponent<IInteractable>(out var interactable) && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            interactable.Interact();
+            _currentInteractable?.Interact();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<IInteractable>(out var interactable))
+        {
+            _currentInteractable = interactable;
+            // MessageBroker.Default.Publish(new InteractionPossibilitiesUpdated(_currentInteractable));
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<IInteractable>(out var interactable))
+        {
+            if (_currentInteractable == interactable)
+            {
+                _currentInteractable = null;
+                // MessageBroker.Default.Publish(new InteractionPossibilitiesUpdated(_currentInteractable));
+            }
         }
     }
 }

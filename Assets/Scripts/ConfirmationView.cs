@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class ConfirmationMessage : MonoBehaviour
+public class ConfirmationView : MonoBehaviour
 {
     [SerializeField]
     private GameObject confirmationWindow;
@@ -28,7 +28,7 @@ public class ConfirmationMessage : MonoBehaviour
         confirmationWindow.SetActive(false);
     }
 
-    private void StartConfirmation()
+    public void StartConfirmation(TextAsset textAsset)
     {
         FindObjectOfType<PlayerInput>().enabled = false;
         confirmationWindow.SetActive(true);
