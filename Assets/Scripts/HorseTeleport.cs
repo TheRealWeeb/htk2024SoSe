@@ -5,15 +5,13 @@ using UnityEngine;
 
 public class HorseTeleport : MonoBehaviour, IInteractable
 {
-    [SerializeField]
-    private GameObject teleportTarget;
+    [SerializeField] private Transform teleportTarget;
     
-    [SerializeField]
-    private GameObject thePlayer;
+    [SerializeField] private Transform thePlayer;
     
     public void Interact()
     {
-        thePlayer.transform.position = teleportTarget.transform.position;
+        thePlayer.position = teleportTarget.position;
     }
 
 }
