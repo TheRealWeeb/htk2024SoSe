@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class GameState: MonoBehaviour
+    public class GameState : MonoBehaviour
     {
-        private Dictionary<ItemType, uint> _items = new();
+        private readonly Dictionary<ItemType, uint> _items = new();
         private readonly List<QuestState> _questStates = new();
 
         public struct QuestState
@@ -30,7 +30,7 @@ namespace DefaultNamespace
                 instance._items[type] += amount;
             }
 
-            // QuestSystem.UpdateQuests(type);
+            QuestSystem.UpdateQuests();
         }
 
         public static bool TryRemoveItem(ItemType type, uint amount)
@@ -64,13 +64,13 @@ namespace DefaultNamespace
         public static void StartQuest(IQuest quest)
         {
             var instance = FindObjectOfType<GameState>();
-        
+
             if (instance._questStates.Any(q => q.Quest.GetId() == quest.GetId()))
             {
                 Debug.LogWarning($"Quest{quest.GetId()} already started - not starting it again");
                 return;
             }
-        
+
             var state = new QuestState()
             {
                 Quest = quest,
@@ -78,12 +78,24 @@ namespace DefaultNamespace
             };
             instance._questStates.Add(state);
         }
-        
+
         public static void RemoveQuest(string questId)
         {
             var instance = FindObjectOfType<GameState>();
             var match = instance._questStates.Find(q => q.Quest.GetId() == questId);
             instance._questStates.Remove(match);
+        }
+
+        public static void MarkQuestCompletable(IQuest quest)
+        {
+            var instance = FindObjectOfType<GameState>();
+            var match = instance._questStates.Find(q => q.Quest.GetId() == quest.GetId());
+            match.Status = QuestStatus.Completable;
+            var index = instance._questStates.FindIndex(q => q.Quest.GetId() == quest.GetId());
+            if (index >= 0 && index < instance._questStates.Count)
+            {
+                instance._questStates[index] = match;
+            }
         }
 
         public static IReadOnlyList<QuestState> GetActiveQuests()
@@ -96,6 +108,18 @@ namespace DefaultNamespace
         {
             var instance = FindObjectOfType<GameState>();
             return instance._questStates.Where(x => x.Status == QuestStatus.Completable).ToList();
+        }
+
+        public static IReadOnlyList<QuestState> GetCompletedQuests()
+        {
+            var instance = FindObjectOfType<GameState>();
+            return instance._questStates.Where(x => x.Status == QuestStatus.Completed).ToList();
+        }
+
+        public static IReadOnlyDictionary<ItemType, uint> GetAllItems()
+        {
+            var instance = FindObjectOfType<GameState>();
+            return instance._items;
         }
     }
 }

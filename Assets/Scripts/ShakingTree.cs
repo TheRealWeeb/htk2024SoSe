@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -31,6 +32,10 @@ public class ShakingTree : MonoBehaviour
     private float _timer = 4.0f;
 
     private bool _isRunning;
+
+    public ItemType type;
+
+    public uint amount;
     
     private void Awake()
     {
@@ -112,6 +117,8 @@ public class ShakingTree : MonoBehaviour
         _amount -= 1;
         
         testButton.interactable = false;
+        
+        GameState.AddItem(type, amount);
     }
 
     private void LoseGame()

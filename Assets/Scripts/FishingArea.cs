@@ -12,6 +12,7 @@ public class FishingArea : MonoBehaviour, IInteractable
             return;
         }
 
-        fishingGame.StartFishing();
+        fishingGame.OpenFishing();
+        Debug.Log("Go.");
     }
 }

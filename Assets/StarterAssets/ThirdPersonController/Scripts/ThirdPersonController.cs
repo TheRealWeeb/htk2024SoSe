@@ -1,4 +1,5 @@
 ﻿ using UnityEngine;
+ using FMOD.Studio;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -86,6 +87,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        public bool disabled = false;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -109,8 +111,9 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
-
+        
         private bool IsCurrentDeviceMouse
+        
         {
             get
             {
@@ -122,7 +125,9 @@ namespace StarterAssets
             }
         }
 
-
+        //audio
+        private EventInstance playerFootsteps;
+        
         private void Awake()
         {
             // get a reference to our main camera
@@ -150,28 +155,39 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps);
         }
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
-
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+            if (!disabled)
+            {
+                _hasAnimator = TryGetComponent(out _animator);
+                
+                Move();
+                                                              
+                UpdateSound();
+                                                                          
+                GroundedCheck();
+                                                                          
+                JumpAndGravity();
+            }
+            
+            
         }
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (!disabled)
+            {
+                CameraRotation();
+            }
         }
 
         private void AssignAnimationIDs()
         {
             _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
@@ -184,10 +200,6 @@ namespace StarterAssets
                 QueryTriggerInteraction.Ignore);
 
             // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDGrounded, Grounded);
-            }
         }
 
         private void CameraRotation()
@@ -275,7 +287,6 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
         }
 
@@ -287,11 +298,7 @@ namespace StarterAssets
                 _fallTimeoutDelta = FallTimeout;
 
                 // update animator if using character
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
-                }
+               
 
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
@@ -386,6 +393,25 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+        private void UpdateSound()
+        {
+            if (_speed != 0 && Grounded)
+            {
+                PLAYBACK_STATE playbackState;
+                playerFootsteps.getPlaybackState(out playbackState);
+
+                if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+                {
+                    playerFootsteps.start();
+                }
+            }
+
+            else
+            {
+                playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
             }
         }
     }
