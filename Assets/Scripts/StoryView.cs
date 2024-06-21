@@ -197,14 +197,21 @@ public class StoryView : MonoBehaviour
             var questName = currentTag.Split(' ')[1];
             var quest = questConfig.quests.First(q => q.GetId() == questName);
             GameState.StartQuest(quest);
-            //FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
+            FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
          }
 
          if (currentTag.Contains("removeQuest"))
          {
             var questName = currentTag.Split(' ')[1];
             GameState.RemoveQuest(questName);
-            //FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
+            FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
+         }
+
+         if (currentTag.Contains("completeQuest"))
+         {
+            var questName = currentTag.Split(' ')[1];
+            GameState.CompleteQuest(questName);
+            FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
          }
       }
    }

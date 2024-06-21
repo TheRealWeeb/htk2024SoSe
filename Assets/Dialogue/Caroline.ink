@@ -20,7 +20,7 @@ Give Fish, four fish.
 
 === FinishQuest ===
 
-# removeQuest CarolineFishing
+# completeQuest CarolineFishing
 Thank you for fish.
 
     -> END

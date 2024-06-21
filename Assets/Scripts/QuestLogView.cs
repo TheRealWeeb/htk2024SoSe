@@ -24,6 +24,11 @@ public class QuestLogView : MonoBehaviour
             {
                 continue;
             }
+
+            if (quest.Quest.IsHidden())
+            {
+                continue;
+            }
             
             var questView = Instantiate(questViewPrefab, questsHolder);
             questView.Set(quest.Quest);

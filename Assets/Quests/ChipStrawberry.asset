@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: ChipStrawberry
   m_EditorClassIdentifier: 
-  displayName: Cultivate Strawberries
+  displayName: Cultivate Strawberries!
   requirements:
   - type: {fileID: 11400000, guid: b4c0f88932cdb5e44978452804a675ee, type: 2}
     amount: 5
+  isHidden: 0

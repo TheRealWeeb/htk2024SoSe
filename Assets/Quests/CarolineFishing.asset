@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: CarolineFishing
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: Go Fish!
   requirements:
   - type: {fileID: 11400000, guid: e5d30c332c8722d45a11394dc2224f06, type: 2}
     amount: 4
+  isHidden: 0

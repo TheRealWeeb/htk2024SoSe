@@ -17,7 +17,7 @@ public static class QuestSystem
             }
         }
 
-        //Object.FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
+        Object.FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
     }
 
     private static void UpdateQuest(CollectionQuest collectionQuest)

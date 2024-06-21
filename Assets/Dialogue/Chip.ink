@@ -1,4 +1,4 @@
-﻿#speaker: Chip
+#speaker: Chip
 
 
 Hey Ethan! How can I help you?
@@ -33,6 +33,7 @@ I feel kinda stressed and sad, because I can't seem to grow any strawberries in 
 
 === HelpOut ===
 
+# addQuest ChipStrawberry
 Thank you so much, Ethan! Here, take those strawberry seeds. I don't think my garden is 'clean' enough to grow strawberries, but I bet yours is! I'll wait for you in front of your garden, we can continue talking there!
 
 + "Alright, see you there!"
