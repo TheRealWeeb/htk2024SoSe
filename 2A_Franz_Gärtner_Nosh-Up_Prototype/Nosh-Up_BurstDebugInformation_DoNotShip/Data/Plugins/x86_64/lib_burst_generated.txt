@@ -30,9 +30,10 @@ Library: C:\Users\backf\Documents\Unity\School\htk2024SoSe\Temp\BurstOutput\Data
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=FMODUnity;
+--assembly-defines=BNGNode;
 --assembly-defines=Unity.ProBuilder.Poly2Tri;
---assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.Mathematics;
+--assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
@@ -104,9 +105,10 @@ Library: C:\Users\backf\Documents\Unity\School\htk2024SoSe\Temp\BurstOutput\Data
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=FMODUnity;
+--assembly-defines=BNGNode;
 --assembly-defines=Unity.ProBuilder.Poly2Tri;
---assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.Mathematics;
+--assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
@@ -176,9 +178,10 @@ Library: C:\Users\backf\Documents\Unity\School\htk2024SoSe\Temp\BurstOutput\Data
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=FMODUnity;
+--assembly-defines=BNGNode;
 --assembly-defines=Unity.ProBuilder.Poly2Tri;
---assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.Mathematics;
+--assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
@@ -252,9 +255,10 @@ Library: C:\Users\backf\Documents\Unity\School\htk2024SoSe\Temp\BurstOutput\Data
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=FMODUnity;
+--assembly-defines=BNGNode;
 --assembly-defines=Unity.ProBuilder.Poly2Tri;
---assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.Mathematics;
+--assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;

@@ -31,8 +31,6 @@ public class StoryView : MonoBehaviour
    [SerializeField] private RectTransform choiceHolder;
    
    [SerializeField] private TextMeshProUGUI speakerName;
-
-   [SerializeField] private Image speakerImage;
    
    [SerializeField] private QuestsConfig questConfig;
    
@@ -42,7 +40,6 @@ public class StoryView : MonoBehaviour
    public class SpeakerConfig
    {
       public string name;
-      public Sprite sprite;
    }
    
    private void Awake()
@@ -126,15 +123,9 @@ public class StoryView : MonoBehaviour
    {
       var speaker = story.globalTags.FirstOrDefault(t => t.Contains("speaker"))?.Split(' ')[1];
       speakerName.text = speaker;
-      speakerImage.sprite = GetSpeakerImage(speaker);
       StartCoroutine(ShowTextLetterByLetter(text));
    }
-
-   private Sprite GetSpeakerImage(string speaker)
-   {
-      return speakerConfigs.FirstOrDefault(s => s.name == speaker)?.sprite;
-   }
-
+   
    IEnumerator ShowTextLetterByLetter(string text)
    {
       storyText.text = text;
