@@ -21,7 +21,7 @@ Give apple, three apple.
 
 === FinishQuest ===
 
-# removeQuest DarcyApplePie
+# completeQuest DarcyApplePie
     Thank you for apple.
 
     -> END

@@ -17,3 +17,5 @@ MonoBehaviour:
   - type: {fileID: 11400000, guid: 955a694eaf6c3294f943f69d8316f44e, type: 2}
     amount: 3
   isHidden: 0
+  endScreenPrefab: {fileID: 385801139363116725, guid: c33866cab1a37ca4d934a51ef4dd1e80,
+    type: 3}

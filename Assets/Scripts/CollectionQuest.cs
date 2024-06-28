@@ -9,6 +9,7 @@ public class CollectionQuest : ScriptableObject, IQuest
     public string displayName;
     public List<ItemRequirement> requirements;
     public bool isHidden;
+    public GameObject endScreenPrefab;
 
     public string GetId()
     {
@@ -23,6 +24,11 @@ public class CollectionQuest : ScriptableObject, IQuest
     public string GetDisplayName()
     {
         return displayName;
+    }
+
+    public GameObject GetEndScreenPrefab()
+    {
+        return endScreenPrefab;
     }
 
     [Serializable]

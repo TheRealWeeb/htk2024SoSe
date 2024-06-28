@@ -22,6 +22,8 @@ public class StoryView : MonoBehaviour
 
    private ThirdPersonController playerController;
 
+   private List<IQuest> _quests;
+
    [SerializeField] private GameObject thePlayer;
    
    [SerializeField] private TextMeshProUGUI storyText;
@@ -31,8 +33,6 @@ public class StoryView : MonoBehaviour
    [SerializeField] private RectTransform choiceHolder;
    
    [SerializeField] private TextMeshProUGUI speakerName;
-   
-   [SerializeField] private QuestsConfig questConfig;
    
    [SerializeField] private List<SpeakerConfig> speakerConfigs;
    
@@ -47,6 +47,14 @@ public class StoryView : MonoBehaviour
       DestroyOldChoices();
       gameObject.SetActive(false);
       playerController = thePlayer.GetComponent<ThirdPersonController>();
+
+      CollectionQuest[] collectionQuests = Resources.LoadAll<CollectionQuest>("Quests");
+      _quests = new List<IQuest>();
+      foreach (var collectionQuest in collectionQuests)
+      {
+         _quests.Add(collectionQuest);
+      }
+
    }
 
    public void StartStory(TextAsset textAsset)
@@ -186,7 +194,7 @@ public class StoryView : MonoBehaviour
          if (currentTag.Contains("addQuest"))
          {
             var questName = currentTag.Split(' ')[1];
-            var quest = questConfig.quests.First(q => q.GetId() == questName);
+            var quest = _quests.First(q => q.GetId().ToLower() == questName.ToLower());
             GameState.StartQuest(quest);
             FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
          }

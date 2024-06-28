@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 namespace DefaultNamespace
 {
@@ -96,6 +97,13 @@ namespace DefaultNamespace
             if (index >= 0 && index < instance._questStates.Count)
             {
                 instance._questStates[index] = match;
+            }
+
+            var uiPrefab = match.Quest.GetEndScreenPrefab();
+            if (uiPrefab != null)
+            {
+                var root = FindObjectOfType<UiRoot>().transform;
+                Instantiate(uiPrefab, root);
             }
             
             Debug.Log("Quest" + questId + "completed");
