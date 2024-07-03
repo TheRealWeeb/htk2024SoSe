@@ -1,6 +1,6 @@
 ﻿EXTERNAL addQuest(questName)
 # speaker Darcy
-VAR finished_darcyapplepie = false
+VAR completable_darcyapplepie = false
 
 
 Give apple, three apple.
@@ -9,7 +9,7 @@ Give apple, three apple.
     -> StartQuest
 + "No."
     -> DidntAccept
-+ {finished_darcyapplepie} "Here."
++ {completable_darcyapplepie} "Here."
     -> FinishQuest
 
 === StartQuest ===

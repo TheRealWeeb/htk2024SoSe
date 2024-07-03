@@ -21,7 +21,7 @@ namespace DefaultNamespace
             Started,
             Completable,
             Completed
-        }
+        }   
 
         public static void AddItem(ItemType type, uint amount)
         {
