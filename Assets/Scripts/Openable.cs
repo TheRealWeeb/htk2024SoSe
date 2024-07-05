@@ -6,17 +6,15 @@ using UnityEngine.InputSystem.LowLevel;
 
 public class Openable : MonoBehaviour, IInteractable
 {
-   [SerializeField]
-   private Animator _animator;
+   [SerializeField] private Animator _animator;
 
-   [SerializeField]
-   private ItemType _requiredItem;
+   [SerializeField] private ItemType _requiredItem;
 
-   [SerializeField]
-   private uint _requiredAmount;
+   [SerializeField] private uint _requiredAmount;
 
-   [SerializeField]
-   private bool _shouldConsume;
+   [SerializeField] private bool _shouldConsume;
+
+   [SerializeField] private bool stayOpen;
    
    private bool _isOpen;
 
@@ -47,6 +45,11 @@ public class Openable : MonoBehaviour, IInteractable
    private void Open()
    {
       _isOpen = true;
-      _animator.SetBool("isOpen", true);
+      if (_animator != null)
+      {
+         _animator.SetBool("isOpen", true);   
+      }
+      
+      
    }
 }

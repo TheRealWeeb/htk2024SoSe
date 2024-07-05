@@ -16,12 +16,6 @@ public class OpenUiButton : MonoBehaviour
 
    private void OpenUi()
    {
-      var uiRoot = FindObjectOfType<UiRoot>();
-      if (uiRoot == null)
-      {
-         throw new Exception("No UiRoot found in scene");
-      }
-
-      Instantiate(screen, uiRoot.transform);
+      UiService.Open(screen);
    }
 }

@@ -120,7 +120,7 @@ public class Fishing : MonoBehaviour
 
         fishingMeter.value = timer;
 
-        pauseMenu.panelNavigation = 3;
+        //pauseMenu.panelNavigation = 3;
     }
 
     public void CloseFishing()
@@ -141,7 +141,7 @@ public class Fishing : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
         playerController.disabled = false;
-        pauseMenu.panelNavigation = 0;
+        //pauseMenu.panelNavigation = 0;
     }
 
     private void ResetFishing()

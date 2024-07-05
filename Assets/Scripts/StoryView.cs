@@ -7,6 +7,7 @@ using DG.Tweening;
 using Ink.Runtime;
 using StarterAssets;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SearchService;
@@ -18,11 +19,15 @@ public class StoryView : MonoBehaviour
    public static event Action<Story> OnCreateStory;
    private Story story;
 
-   private PlayerInputActions playerInputActions;
+   private PlayerInput playerInput;
 
    private ThirdPersonController playerController;
 
    private List<IQuest> _quests;
+
+   private ItemType itemReward;
+
+   private uint amount;
 
    [SerializeField] private GameObject thePlayer;
    
@@ -35,6 +40,8 @@ public class StoryView : MonoBehaviour
    [SerializeField] private TextMeshProUGUI speakerName;
    
    [SerializeField] private List<SpeakerConfig> speakerConfigs;
+
+   [SerializeField] private GameObject normalHudGroup;
    
    [Serializable]
    public class SpeakerConfig
@@ -47,6 +54,7 @@ public class StoryView : MonoBehaviour
       DestroyOldChoices();
       gameObject.SetActive(false);
       playerController = thePlayer.GetComponent<ThirdPersonController>();
+      playerInput = FindObjectOfType<PlayerInput>();
 
       CollectionQuest[] collectionQuests = Resources.LoadAll<CollectionQuest>("Quests");
       _quests = new List<IQuest>();
@@ -57,12 +65,15 @@ public class StoryView : MonoBehaviour
 
    }
 
-   public void StartStory(TextAsset textAsset)
+   public void StartStory(TextAsset textAsset, ItemType itemType, uint uInt)
    {
       gameObject.SetActive(true);
+      normalHudGroup.SetActive(false);
       story = new Story(textAsset.text);
+      itemReward = itemType;
+      amount = uInt;
 
-      FindObjectOfType<PlayerInput>().enabled = false;
+      playerInput.currentActionMap = playerInput.actions.FindActionMap("UI");
       Cursor.visible = true;
       Cursor.lockState = CursorLockMode.None;
       
@@ -76,10 +87,11 @@ public class StoryView : MonoBehaviour
 
    private void CloseStory()
    {
-      FindObjectOfType<PlayerInput>().enabled = true;
+      playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
       Cursor.visible = false;
       Cursor.lockState = CursorLockMode.Locked;
       gameObject.SetActive(false);
+      normalHudGroup.SetActive(true);
    }
 
    private void ShowStory()
@@ -211,6 +223,12 @@ public class StoryView : MonoBehaviour
             var questName = currentTag.Split(' ')[1];
             GameState.CompleteQuest(questName);
             FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
+         }
+
+         if (currentTag.Contains("addItem"))
+         {
+            var questName = currentTag.Split(' ')[1];
+            GameState.AddItem(itemReward, amount);
          }
       }
    }

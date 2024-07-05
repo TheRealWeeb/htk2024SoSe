@@ -27,11 +27,13 @@ Oh, thats not great to hear. Unfortunately, I don't have great news for you... i
 
 + "What happened?"
     -> ContinuingProblem
++ "Nosh-Up? What's that?"
+    -> ExplainingNoshUp
 
 
 === ContinuingProblem ===
 
-Unfortunately, our people didn't have enough time to prepare for Nosh-Up and will end up not bringing their favourite dishes to the table. Could you help them with their remaining preparations, so that everyone can enjoy Nosh-Up like we always did?
+Our people didn't have enough time to prepare for Nosh-Up and will end up not bringing their favourite dishes to the table. Could you help them with their remaining preparations, so that everyone can enjoy Nosh-Up like we always did?
 
 + "Sure thing!"
     -> StartHelping

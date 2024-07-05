@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
+using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,15 +11,17 @@ public class Strawberry : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject wateredPanel;
     [SerializeField] private TextMeshProUGUI wateredText;
+    [SerializeField] private ItemType requiredItem;
+    [SerializeField] private uint requiredAmount;
+    [SerializeField] private bool shouldConsume;
 
     private float timer = 2f;
 
     private bool watered;
 
     private bool showWatered = false;
-    
-    
 
+    private bool isPlanted = false;
 
     private void Awake()
     {
@@ -42,6 +45,18 @@ public class Strawberry : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
+        if (isPlanted)
+        {
+            
+        }    
+        if (shouldConsume) 
+        {
+            if (GameState.TryRemoveItem(requiredItem, requiredAmount))
+            {
+                
+            }
+        }
+     
         wateredPanel.SetActive(true);
         showWatered = true;
         gameObject.GetComponent<Collider>().enabled = false;

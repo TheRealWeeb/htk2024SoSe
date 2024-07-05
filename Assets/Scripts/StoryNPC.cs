@@ -5,6 +5,8 @@ using UnityEngine;
 public class StoryNPC : MonoBehaviour, IInteractable
 {
    [SerializeField] private TextAsset story;
+   [SerializeField] private ItemType itemReward;
+   [SerializeField] private uint amount;
 
    public void Interact()
    {
@@ -14,6 +16,6 @@ public class StoryNPC : MonoBehaviour, IInteractable
          return;
       }
 
-      storyView.StartStory(story);
+      storyView.StartStory(story, itemReward, amount);
    }
 }

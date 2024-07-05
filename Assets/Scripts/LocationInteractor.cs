@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LocationInteractor : MonoBehaviour
 {
     [CanBeNull] private IInteractable? _currentInteractable;
+
+    private PlayerInput _playerInput;
 
     private void Update()
     {

@@ -25,6 +25,11 @@ namespace DefaultNamespace
 
         public static void AddItem(ItemType type, uint amount)
         {
+            if (amount == 0 || type == null)
+            {
+                return;
+            }
+            
             var instance = FindObjectOfType<GameState>();
             if (!instance._items.TryAdd(type, amount))
             {
@@ -36,6 +41,11 @@ namespace DefaultNamespace
 
         public static bool TryRemoveItem(ItemType type, uint amount)
         {
+            if (amount == 0 || type == null)
+            {
+                return true;
+            }
+            
             var instance = FindObjectOfType<GameState>();
             if (instance._items.TryGetValue(type, out var ownedAmount))
             {
@@ -53,6 +63,11 @@ namespace DefaultNamespace
 
         public static bool HasEnoughItems(ItemType type, uint amount)
         {
+            if (amount == 0 || type == null)
+            {
+                return true;
+            }
+            
             var instance = FindObjectOfType<GameState>();
             if (instance._items.TryGetValue(type, out var ownedAmount))
             {

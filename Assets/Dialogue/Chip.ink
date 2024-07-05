@@ -1,4 +1,5 @@
-#speaker: Chip
+EXTERNAL addQuest(questName)
+# speaker: Chip
 
 
 Hey Ethan! How can I help you?
@@ -7,8 +8,7 @@ Hey Ethan! How can I help you?
     -> TellingProblem
 + "Just wanted to check on you."
     -> TellingMood
-+ "Never mind."
-    -> END
+
 
 
 === TellingProblem ===
@@ -23,11 +23,7 @@ Yes, that's right! It's about my favourite dish. You know, I want to bring a str
 
 === TellingMood ===
 
-I feel kinda stressed and sad, because I can't seem to grow any strawberries in my garden...
-
-+ "Why do you want strawberries?"
-    -> WhyStrawberry
-+ "I'm sorry to hear that, good luck with your strawberries, fingers crossed!
+That's nice of you, thank you!
     -> END
     
 

@@ -1,5 +1,5 @@
-﻿EXTERNAL addQuest(questName)
-# speaker Darcy
+EXTERNAL addQuest(questName)
+# speaker: Darcy
 VAR completable_darcyapplepie = false
 
 

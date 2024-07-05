@@ -11,107 +11,50 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pausePanel;
 
-    [SerializeField] private GameObject optionsPanel;
-         
     [SerializeField] private Button continueButton;
 
     [SerializeField] private Button optionsButton;
 
-    [SerializeField] private Button backButton;
+    [SerializeField] private OptionsMenu optionsMenuPrefab;
 
-    [SerializeField] private int buildIndex;
-
-    [SerializeField] private GameObject dialogueMenu;
-
-    [SerializeField] private GameObject shakingTree;
-
-    [SerializeField] private GameObject thePlayer;
-    
-    private ThirdPersonController playerController;
-
-    public int panelNavigation;
-
-    private Fishing fishing;
+    private PlayerInput playerInput;
 
     private void Awake()
     {
-        pausePanel.SetActive(false);
-        optionsPanel.SetActive(false);
-        continueButton.onClick.AddListener(ClosePauseMenu);
-        optionsButton.onClick.AddListener(OpenOptionsMenu);
-        backButton.onClick.AddListener(CloseOptionsMenu);
-        playerController = thePlayer.GetComponent<ThirdPersonController>();
-        fishing = FindObjectOfType<Fishing>(includeInactive: true);
+        playerInput = FindObjectOfType<PlayerInput>();
+        Pause();
+        continueButton.onClick.AddListener(Continue);
+        optionsButton.onClick.AddListener(OpenOptions);
+        continueButton.Select();
     }
-    
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Menu"))
         {
-            PanelNavigation();
+            Continue();
         }
     }
 
-    private void PanelNavigation()
+    private void Pause()
     {
-        switch (panelNavigation)
-        {
-            case 0:
-                OpenPauseMenu();
-                panelNavigation = 1;
-                break;
-            case 1:
-                ClosePauseMenu();
-                panelNavigation = 0;
-                break;
-            case 2:
-                CloseOptionsMenu();
-                panelNavigation = 1;
-                break;
-            case 3:
-                fishing.CloseFishing();
-                panelNavigation = 0;
-                break;
-        }
-    }
-    
-    private void OpenPauseMenu()
-    {
-        pausePanel.SetActive(true);
-        
+        playerInput.currentActionMap = playerInput.actions.FindActionMap("UI");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        playerController.disabled = true;
-        
-        continueButton.Select();
     }
 
-    private void ClosePauseMenu()
+    private void Continue()
     {
-        pausePanel.SetActive(false);
-
+        playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        playerController.disabled = false;
-    }
-    
-    private void OpenOptionsMenu()
-    {
-        pausePanel.SetActive(false);
-        optionsPanel.SetActive(true);
-        
-        panelNavigation = 2;
+        Destroy(gameObject);
     }
 
-    private void CloseOptionsMenu()
+    private void OpenOptions()
     {
-        optionsPanel.SetActive(false);
-        pausePanel.SetActive(true);
-        
-        continueButton.Select();
+        UiService.Open(optionsMenuPrefab.gameObject);
+        Destroy(gameObject);
     }
-
-    
 }
