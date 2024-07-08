@@ -77,9 +77,22 @@ public class StoryView : MonoBehaviour
       Cursor.visible = true;
       Cursor.lockState = CursorLockMode.None;
       
-      foreach(var quest in GameState.GetCompletableQuests())
+      foreach (var quest in GameState.GetCompletableQuests())
       {
-         story.variablesState["completable_" + quest.Quest.GetId().ToLower()] = true;
+         var varName = "completable_" + quest.Quest.GetId().ToLower();
+         if (story.variablesState.Contains(varName))
+         {
+            story.variablesState[varName] = true;
+         }
+      }
+
+      foreach (var quest in GameState.GetCompletedQuests())
+      {
+         var varName = "completed_" + quest.Quest.GetId().ToLower();
+         if (story.variablesState.Contains(varName))
+         {
+            story.variablesState[varName] = true;
+         }
       }
       
       ShowStory();
@@ -92,6 +105,7 @@ public class StoryView : MonoBehaviour
       Cursor.lockState = CursorLockMode.Locked;
       gameObject.SetActive(false);
       normalHudGroup.SetActive(true);
+      QuestSystem.UpdateQuests();
    }
 
    private void ShowStory()
@@ -118,7 +132,7 @@ public class StoryView : MonoBehaviour
       }
       else
       {
-         Button choice = CreateChoiceView("Continue", 0);
+         Button choice = CreateChoiceView("Alright", 0);
          choice.onClick.AddListener(CloseStory);
       }
    }

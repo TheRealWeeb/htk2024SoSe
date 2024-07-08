@@ -8,6 +8,7 @@ public class CollectionQuest : ScriptableObject, IQuest
 {
     public string displayName;
     public List<ItemRequirement> requirements;
+    public List<ItemReward> rewards;
     public bool isHidden;
     public GameObject endScreenPrefab;
 
@@ -36,5 +37,12 @@ public class CollectionQuest : ScriptableObject, IQuest
     {
         public ItemType type;
         public uint amount = 1;
+    }
+
+    [Serializable]
+    public class ItemReward
+    {
+        public ItemType reward;
+        public uint amount;
     }
 }

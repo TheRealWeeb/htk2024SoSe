@@ -93,6 +93,7 @@ namespace DefaultNamespace
                 Status = QuestStatus.Started,
             };
             instance._questStates.Add(state);
+            QuestSystem.UpdateQuests();
         }
 
         public static void RemoveQuest(string questId)
@@ -133,6 +134,7 @@ namespace DefaultNamespace
             if (index >= 0 && index < instance._questStates.Count)
             {
                 instance._questStates[index] = match;
+                Debug.Log("is now completable.");
             }
         }
 

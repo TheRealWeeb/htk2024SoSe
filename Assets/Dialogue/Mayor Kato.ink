@@ -1,23 +1,47 @@
 EXTERNAL addQuest(questName)
 #speaker: MayorKato
-VAR finished_ChipStrawberry = false
+VAR completable_chipstart = false
+VAR completed_chipstart = false
 
+{
+    - completable_chipstrawberry == true:
+        -> AcceptedQuest
+    - completable_chipstrawberry == false && completed_chipstart == false:
+        -> NotAcceptedQuest
+    - completed_chipstart == true:
+        -> StartedHelpingChip
+}
+
+
+=== NotAcceptedQuest ===
 
 Hey Ethan! How are you doing today?
 
-+ "I'm doing great!"
++ I'm doing great!
     -> TellingProblem
-+ "Didn't sleep well last night..."
++ Didn't sleep well last night...
     -> TellingProblemBad
+
+
+=== AcceptedQuest ===
+
+Remember to check on Chip, he had a problem regarding Nosh-Up!
+    -> END
+
+
+=== StartedHelpingChip ===
+
+Thank you for helping Chip out, Ethan!
+    -> END
 
 
 === TellingProblem ===
 
 That's very nice to hear Ethan! Unfortunately I don't have great news for you. It's about Nosh-Up.
 
-+ "Oh no, did something happen?"
++ Oh no, did something happen?
     -> ContinuingProblem
-+ "Nosh-Up? What's that?"
++ Nosh-Up? What's that?
     -> ExplainingNoshUp
 
 
@@ -25,9 +49,9 @@ That's very nice to hear Ethan! Unfortunately I don't have great news for you. I
 
 Oh, thats not great to hear. Unfortunately, I don't have great news for you... it's about Nosh-Up.
 
-+ "What happened?"
++ What happened?
     -> ContinuingProblem
-+ "Nosh-Up? What's that?"
++ Nosh-Up? What's that?
     -> ExplainingNoshUp
 
 
@@ -35,9 +59,9 @@ Oh, thats not great to hear. Unfortunately, I don't have great news for you... i
 
 Our people didn't have enough time to prepare for Nosh-Up and will end up not bringing their favourite dishes to the table. Could you help them with their remaining preparations, so that everyone can enjoy Nosh-Up like we always did?
 
-+ "Sure thing!"
++ Sure thing!
     -> StartHelping
-+ "I'm sorry, but I'm not interested."
++ I'm sorry, but I'm not interested.
     -> DoNotHelp
 
 
@@ -45,12 +69,12 @@ Our people didn't have enough time to prepare for Nosh-Up and will end up not br
 
 Don't you remember? It's our yearly meal we enjoy together as one village since we found you! Everyone brings their favourite dishes to the table and we enjoy the festivities that come with it!
 
-+ "Ohh alright, now I remember again!"
++ Ohh alright, now I remember again!
     -> ContinuingProblem
 
 
 === StartHelping ===
- #addQuest ChipStrawberry
+ #addQuest ChipStart
 
 Thank you so much, Ethan! You could start by helping Chip out. He is just around the corner of his parents' house. Their home is located at the end of the pathway.
 

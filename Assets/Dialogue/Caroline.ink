@@ -1,8 +1,9 @@
 ﻿EXTERNAL addQuest(questName)
 # speaker Caroline
-VAR finished_carolinefishing = false
+VAR completable_carolinefishing = false
+VAR 
 
-Give Fish, four fish.
+Oh, hey Ethan! What a surprise! What brings you here?
 
 + "Ok."
     -> StartQuest
