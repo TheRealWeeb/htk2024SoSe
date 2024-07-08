@@ -1,7 +1,7 @@
 ﻿EXTERNAL addQuest(questName)
 # speaker Caroline
 VAR completable_carolinefishing = false
-VAR 
+VAR completed_chipstrawberryplanting = false
 
 Oh, hey Ethan! What a surprise! What brings you here?
 
@@ -9,7 +9,7 @@ Oh, hey Ethan! What a surprise! What brings you here?
     -> StartQuest
 + "No."
     -> DidntAccept
-+ {finished_carolinefishing} "Here."
++ {completable_carolinefishing} "Here."
     -> FinishQuest
 
 === StartQuest ===

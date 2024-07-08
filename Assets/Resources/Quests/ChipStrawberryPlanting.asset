@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
-  m_Name: CarolineFishing
+  m_Name: ChipStrawberryPlanting
   m_EditorClassIdentifier: 
-  displayName: Go fish up four fish by the beach!
+  displayName: Go to your garden and plant the strawberry seeds!
   requirements:
-  - type: {fileID: 11400000, guid: e5d30c332c8722d45a11394dc2224f06, type: 2}
-    amount: 4
+  - type: {fileID: 11400000, guid: 134321be5d2e66b4e911da5df2c2329d, type: 2}
+    amount: 1
   rewards: []
   isHidden: 0
   endScreenPrefab: {fileID: 0}

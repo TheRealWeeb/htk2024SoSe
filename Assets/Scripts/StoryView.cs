@@ -241,8 +241,12 @@ public class StoryView : MonoBehaviour
 
          if (currentTag.Contains("addItem"))
          {
-            var questName = currentTag.Split(' ')[1];
             GameState.AddItem(itemReward, amount);
+         }
+
+         if (currentTag.Contains("teleport"))
+         {
+                
          }
       }
    }

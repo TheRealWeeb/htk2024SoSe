@@ -13,7 +13,10 @@ public class Strawberry : MonoBehaviour, IInteractable
     [SerializeField] private TextMeshProUGUI wateredText;
     [SerializeField] private ItemType requiredItem;
     [SerializeField] private uint requiredAmount;
-    [SerializeField] private bool shouldConsume;
+    [SerializeField] private ItemType reward;
+    [SerializeField] private uint amount;
+    [SerializeField] private ItemType requiredItemTwo;
+    [SerializeField] private uint requiredAmountTwo;
 
     private float timer = 2f;
 
@@ -45,22 +48,27 @@ public class Strawberry : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
-        if (isPlanted)
-        {
-            
-        }    
-        if (shouldConsume) 
+        if (!isPlanted)
         {
             if (GameState.TryRemoveItem(requiredItem, requiredAmount))
             {
-                
+                isPlanted = true;
             }
         }
+        else
+        {
+            if (GameState.HasEnoughItems(requiredItemTwo, requiredAmountTwo))
+            {
+                PlayerPrefs.SetInt("WateredCrop", 1);
+                gameObject.GetComponent<Collider>().enabled = false;
+                GameState.AddItem(reward, amount);
+                QuestSystem.UpdateQuests();
+            }
+        }
+        
      
-        wateredPanel.SetActive(true);
-        showWatered = true;
-        gameObject.GetComponent<Collider>().enabled = false;
-        PlayerPrefs.SetInt("WateredCrop", 1);
+        // wateredPanel.SetActive(true);
+        // showWatered = true;
     }
 
     private void Timer()

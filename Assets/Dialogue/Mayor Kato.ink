@@ -2,6 +2,7 @@ EXTERNAL addQuest(questName)
 #speaker: MayorKato
 VAR completable_chipstart = false
 VAR completed_chipstart = false
+VAR completable_chipstrawberry = false
 
 {
     - completable_chipstrawberry == true:
@@ -74,15 +75,13 @@ Don't you remember? It's our yearly meal we enjoy together as one village since 
 
 
 === StartHelping ===
- #addQuest ChipStart
+# addQuest chipstart
 
 Thank you so much, Ethan! You could start by helping Chip out. He is just around the corner of his parents' house. Their home is located at the end of the pathway.
-
--> END
+    -> END
 
 
 === DoNotHelp ===
 
 That's alright, I know that you have your own things to worry about as well.
-
--> END
+    -> END

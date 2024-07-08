@@ -93,6 +93,7 @@ namespace DefaultNamespace
                 Status = QuestStatus.Started,
             };
             instance._questStates.Add(state);
+            Debug.Log("Quest started.");
             QuestSystem.UpdateQuests();
         }
 
