@@ -13,16 +13,18 @@ VAR completable_carolinetalk = false
 {
     - completed_chipstart == true && completable_chipstrawberrytalk == true:
         -> StartPlanting
-    - completable_chipstart == true && completed_chipstart == false:
-        -> StartQuest
     - completable_chipstrawberryplanting == true && completed_chipstrawberryplanting == false:
         -> TellToWater
     - completable_chipstrawberrywatering == true && completed_chipstrawberrywatering == false:
         -> TellWait
+    - completed_chipstrawberryplanting == true:
+        -> ReminderWatering
     - completed_chipstrawberrytalk == true:
         -> ReminderPlanting
     - completable_carolinetalk == true:
         -> ThankingForHelp
+    - completed_chipstart == false:
+        -> StartQuest
 }
 
 // ChipStart Quest
@@ -57,15 +59,10 @@ That's nice of you, thank you!
 
 # addQuest ChipStrawberryTalk
 # completeQuest ChipStart
+# teleport ChipStart
+
 Thank you so much, Ethan! I don't think my garden is 'clean' enough to grow strawberries, but I bet yours is! I'll wait for you in front of your garden, we can continue talking there!
 
-+ Alright, see you there!
-    -> HelpOutTwo
-
-
-=== HelpOutTwo ===
-
-See you there!
     -> END
 
 
@@ -81,10 +78,11 @@ That's alright! But if you do have time, please come by, it's very important.
 
 === StartPlanting ===
 
-# addQuest chipstrawberryplanting
-# completeQuest chipstrawberrytalk
-# addItem chipstrawberrytalk
+# addQuest ChipStrawberryPlanting
+# completeQuest ChipStrawberryTalk
+
 Here, take those strawberry seeds, Ethan! Now you have to plant those strawberries and after that, come and talk to me again!
+
     -> END
 
 
@@ -92,21 +90,30 @@ Here, take those strawberry seeds, Ethan! Now you have to plant those strawberri
 
 === TellToWater ===
 
-# completeQuest chipstrawberryplanting
-# addQuest chipstrawberrywatering
+# addQuest ChipStrawberryWatering
+# completeQuest ChipStrawberryPlanting
+
 Perfect, Ethan! Now you have to get your watering can and start watering them!
+
     -> END
 
 
 === ReminderPlanting ===
 
 Just plant the strawberries in your garden!
+
+    -> END
+
+
+=== ReminderWatering ===
+Just water the strawberries in your garden!
+
     -> END
 
 
 === TellWait ===
 
-# completeQuest chipstrawberrywatering
+# completeQuest ChipStrawberryWatering
 
 Thank you again for your help, Ethan! Remember to water them tomorrow to be able to harvest them on the day of Nosh-Up!
 
@@ -127,20 +134,25 @@ Alright! Oh, one more thing! I've heard that Caroline needs help with something.
 === HelpCaroline ===
 
 # addQuest CarolineTalk
+
 Yes! She is at her house, it's between my house and the horse carriage!
+
     -> END
 
 
 === DontHelpCaroline ===
 
 # addQuest CarolineTalk
+
 No problem, I know that you may have your own things to take care of first. If you find the time for it, she currently is in her house. It's the one between my house and the horse carriage.
+
     -> END
 
 
 === ThankingForHelp ===
 
 Thank you again for helping me! Remember to water them tomorrow to be able to harvest then on the day of Nosh-Up!
+
     -> END
 
 

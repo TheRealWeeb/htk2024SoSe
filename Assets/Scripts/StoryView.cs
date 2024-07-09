@@ -29,6 +29,8 @@ public class StoryView : MonoBehaviour
 
    private uint amount;
 
+   private GameObject npc;
+
    [SerializeField] private GameObject thePlayer;
    
    [SerializeField] private TextMeshProUGUI storyText;
@@ -65,13 +67,13 @@ public class StoryView : MonoBehaviour
 
    }
 
-   public void StartStory(TextAsset textAsset, ItemType itemType, uint uInt)
+   public void StartStory(TextAsset textAsset, GameObject npcGameObject)
    {
       gameObject.SetActive(true);
       normalHudGroup.SetActive(false);
       story = new Story(textAsset.text);
-      itemReward = itemType;
-      amount = uInt;
+      npc = npcGameObject;
+      
 
       playerInput.currentActionMap = playerInput.actions.FindActionMap("UI");
       Cursor.visible = true;
@@ -105,7 +107,6 @@ public class StoryView : MonoBehaviour
       Cursor.lockState = CursorLockMode.Locked;
       gameObject.SetActive(false);
       normalHudGroup.SetActive(true);
-      QuestSystem.UpdateQuests();
    }
 
    private void ShowStory()
@@ -239,14 +240,10 @@ public class StoryView : MonoBehaviour
             FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
          }
 
-         if (currentTag.Contains("addItem"))
-         {
-            GameState.AddItem(itemReward, amount);
-         }
-
          if (currentTag.Contains("teleport"))
          {
-                
+            var questName = currentTag.Split(' ')[1];
+            GameState.TeleportNPC(questName, npc);
          }
       }
    }

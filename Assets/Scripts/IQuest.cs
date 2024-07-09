@@ -8,4 +8,7 @@ public interface IQuest
     public bool IsHidden();
     string GetDisplayName();
     GameObject GetEndScreenPrefab();
+    ItemType GetReward();
+    uint GetRewardAmount();
+    GameObject Teleport();
 }

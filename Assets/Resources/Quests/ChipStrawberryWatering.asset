@@ -15,7 +15,9 @@ MonoBehaviour:
   displayName: Go to your garden and water the strawberry seeds!
   requirements:
   - type: {fileID: 11400000, guid: ece7b76e9c649fb41bb275611394575d, type: 2}
-    amount: 1
-  rewards: []
+    amount: 2
+  reward: {fileID: 0}
+  amount: 0
   isHidden: 0
   endScreenPrefab: {fileID: 0}
+  teleportTarget: {fileID: 0}

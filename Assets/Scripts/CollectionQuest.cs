@@ -8,9 +8,11 @@ public class CollectionQuest : ScriptableObject, IQuest
 {
     public string displayName;
     public List<ItemRequirement> requirements;
-    public List<ItemReward> rewards;
+    public ItemType reward;
+    public uint amount;
     public bool isHidden;
     public GameObject endScreenPrefab;
+    public GameObject teleportTarget;
 
     public string GetId()
     {
@@ -32,17 +34,25 @@ public class CollectionQuest : ScriptableObject, IQuest
         return endScreenPrefab;
     }
 
+    public ItemType GetReward()
+    {
+        return reward;
+    }
+
+    public uint GetRewardAmount()
+    {
+        return amount;
+    }
+
+    public GameObject Teleport()
+    {
+        return teleportTarget;
+    }
+
     [Serializable]
     public class ItemRequirement
     {
         public ItemType type;
         public uint amount = 1;
-    }
-
-    [Serializable]
-    public class ItemReward
-    {
-        public ItemType reward;
-        public uint amount;
     }
 }

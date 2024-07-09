@@ -18,9 +18,9 @@ namespace DefaultNamespace
 
         public enum QuestStatus
         {
-            Started,
-            Completable,
-            Completed
+            Started = 0,
+            Completable = 1,
+            Completed = 2
         }   
 
         public static void AddItem(ItemType type, uint amount)
@@ -122,20 +122,46 @@ namespace DefaultNamespace
                 var root = FindObjectOfType<UiRoot>().transform;
                 Instantiate(uiPrefab, root);
             }
+
+            var reward = match.Quest.GetReward();
+            var amount = match.Quest.GetRewardAmount();
+
+            ClaimRewards(reward, amount);
             
             Debug.Log("Quest" + questId + "completed");
         }
 
+        public static void ClaimRewards(ItemType reward, uint amount)
+        {
+            AddItem(reward, amount);
+        }
+
+        public static void TeleportNPC(string questId, GameObject npc)
+        {
+            var instance = FindObjectOfType<GameState>();
+            var match = instance._questStates.Find(q => q.Quest.GetId() == questId);
+            var teleportTarget = match.Quest.Teleport();
+            if (teleportTarget != null)
+            {
+                npc.transform.position = teleportTarget.transform.position;
+            }
+        }
+        
         public static void MarkQuestCompletable(IQuest quest)
         {
             var instance = FindObjectOfType<GameState>();
             var match = instance._questStates.Find(q => q.Quest.GetId() == quest.GetId());
+            if (match.Status == QuestStatus.Completed)
+            {
+                return;
+            }
+
             match.Status = QuestStatus.Completable;
             var index = instance._questStates.FindIndex(q => q.Quest.GetId() == quest.GetId());
             if (index >= 0 && index < instance._questStates.Count)
             {
                 instance._questStates[index] = match;
-                Debug.Log("is now completable.");
+                Debug.Log(quest.GetId() + "is now completable.");
             }
         }
 

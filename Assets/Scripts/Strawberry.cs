@@ -53,12 +53,14 @@ public class Strawberry : MonoBehaviour, IInteractable
             if (GameState.TryRemoveItem(requiredItem, requiredAmount))
             {
                 isPlanted = true;
+                GameState.AddItem(reward, amount);
             }
         }
         else
         {
             if (GameState.HasEnoughItems(requiredItemTwo, requiredAmountTwo))
             {
+                GameState.AddItem(reward, amount);
                 PlayerPrefs.SetInt("WateredCrop", 1);
                 gameObject.GetComponent<Collider>().enabled = false;
                 GameState.AddItem(reward, amount);

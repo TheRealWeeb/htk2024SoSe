@@ -2,12 +2,12 @@ EXTERNAL addQuest(questName)
 #speaker: MayorKato
 VAR completable_chipstart = false
 VAR completed_chipstart = false
-VAR completable_chipstrawberry = false
+
 
 {
-    - completable_chipstrawberry == true:
+    - completable_chipstart == true:
         -> AcceptedQuest
-    - completable_chipstrawberry == false && completed_chipstart == false:
+    - completable_chipstart == false && completed_chipstart == false:
         -> NotAcceptedQuest
     - completed_chipstart == true:
         -> StartedHelpingChip
