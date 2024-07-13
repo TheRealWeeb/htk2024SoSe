@@ -8,7 +8,7 @@ VAR completable_chipstrawberryplanting = false
 VAR completed_chipstrawberryplanting = false
 VAR completable_chipstrawberrywatering = false
 VAR completed_chipstrawberrywatering = false
-VAR completable_carolinetalk = false
+VAR completable_carolinestart = false
 
 {
     - completed_chipstart == true && completable_chipstrawberrytalk == true:
@@ -21,7 +21,7 @@ VAR completable_carolinetalk = false
         -> ReminderWatering
     - completed_chipstrawberrytalk == true:
         -> ReminderPlanting
-    - completable_carolinetalk == true:
+    - completable_carolinestart == true:
         -> ThankingForHelp
     - completed_chipstart == false:
         -> StartQuest
@@ -133,7 +133,7 @@ Alright! Oh, one more thing! I've heard that Caroline needs help with something.
 
 === HelpCaroline ===
 
-# addQuest CarolineTalk
+# addQuest CarolineStart
 
 Yes! She is at her house, it's between my house and the horse carriage!
 
@@ -142,7 +142,7 @@ Yes! She is at her house, it's between my house and the horse carriage!
 
 === DontHelpCaroline ===
 
-# addQuest CarolineTalk
+# addQuest CarolineStart
 
 No problem, I know that you may have your own things to take care of first. If you find the time for it, she currently is in her house. It's the one between my house and the horse carriage.
 
