@@ -10,6 +10,11 @@ public class QuestLogView : MonoBehaviour
 
     [SerializeField] private QuestStatusView questViewPrefab;
 
+    private void Awake()
+    {
+        ShowActiveQuests();
+    }
+    
     public void ShowActiveQuests()
     {
         foreach (Transform child in questsHolder)
@@ -18,6 +23,12 @@ public class QuestLogView : MonoBehaviour
         }
 
         var activeQuests = GameState.GetActiveQuests();
+        if (activeQuests.Count == 0)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        
         foreach (var quest in activeQuests)
         {
             if (quest.Status == GameState.QuestStatus.Completed)

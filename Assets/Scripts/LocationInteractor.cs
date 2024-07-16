@@ -25,6 +25,11 @@ public class LocationInteractor : MonoBehaviour
         {
             _currentInteractable = interactable;
             // MessageBroker.Default.Publish(new InteractionPossibilitiesUpdated(_currentInteractable));
+
+            if (other.TryGetComponent<Outline>(out var outline))
+            {
+                outline.enabled = true;
+            }
         }
     }
     
@@ -37,6 +42,11 @@ public class LocationInteractor : MonoBehaviour
                 _currentInteractable = null;
                 // MessageBroker.Default.Publish(new InteractionPossibilitiesUpdated(_currentInteractable));
             }
+        }
+        
+        if (other.TryGetComponent<Outline>(out var outline))
+        {
+            outline.enabled = false;
         }
     }
 }
