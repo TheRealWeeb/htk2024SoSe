@@ -31,6 +31,8 @@ public class StoryView : MonoBehaviour
 
    private GameObject npc;
 
+   private PauseMenu pauseMenu;
+
    [SerializeField] private GameObject thePlayer;
    
    [SerializeField] private TextMeshProUGUI storyText;
@@ -57,6 +59,7 @@ public class StoryView : MonoBehaviour
       gameObject.SetActive(false);
       playerController = thePlayer.GetComponent<ThirdPersonController>();
       playerInput = FindObjectOfType<PlayerInput>();
+      pauseMenu = FindObjectOfType<PauseMenu>();
 
       CollectionQuest[] collectionQuests = Resources.LoadAll<CollectionQuest>("Quests");
       _quests = new List<IQuest>();
@@ -73,6 +76,7 @@ public class StoryView : MonoBehaviour
       normalHudGroup.SetActive(false);
       story = new Story(textAsset.text);
       npc = npcGameObject;
+      pauseMenu.panelNavigation = 4;
       
 
       playerInput.currentActionMap = playerInput.actions.FindActionMap("UI");
@@ -100,7 +104,7 @@ public class StoryView : MonoBehaviour
       ShowStory();
    }
 
-   private void CloseStory()
+   public void CloseStory()
    {
       playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
       Cursor.visible = false;
@@ -174,7 +178,7 @@ public class StoryView : MonoBehaviour
             yield break;
          }
 
-         yield return new WaitForSeconds(0.025f);
+         yield return new WaitForSeconds(0.02f);
       }
    }
    
@@ -188,7 +192,7 @@ public class StoryView : MonoBehaviour
 
       choice.transform
          .DOScale(1f, 0.5f)
-         .SetEase(Ease.OutBack)
+         .SetEase(Ease.OutBounce)
          .From(0f)
          .SetDelay(index * 0.2f);
        

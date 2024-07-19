@@ -4,10 +4,17 @@ VAR completable_carolinestart = false
 VAR completed_chipstrawberrywatering = false
 VAR completed_carolinestart = false
 VAR completable_carolinefishing = false
+VAR completable_carolinesecretquest = false
+VAR completed_carolinesecretqueststart = false
+VAR completable_carolinesecretqueststart = false
 
 
 {
-    -completed_carolinestart == false:
+    - completable_carolinesecretquest == true || completed_carolinesecretqueststart == true:
+        -> FinishSecret
+    - completable_carolinesecretqueststart == true:
+        -> SecretQuest
+    - completed_carolinestart == false:
         -> FirstTalk
     - completable_carolinefishing == true:
         -> FinishQuest
@@ -76,5 +83,83 @@ Alright, just come by again later!
 === NeverMind ===
 
 Alright, have a good day!
+
+    -> END
+
+
+=== SecretQuest ===
+
+Oh hey Ethan! I'm so happy to see you! How are you doing?
+
+    + Doing great, how about you?
+        -> GreatAnswer
+    + Could be better...
+        -> BadAnswer
+
+
+=== GreatAnswer ===
+
+That's good to here! I'm doing great as well, thanks for asking! Anyways, I wanted to tell you a legend I've liked since I'm a kid. It's about a fish that is called 'Elaine'. It is said, that this fish was so beautiful, they symbolized it with love. They are rarely seen in the water but in the legends they say when the village is getting together, the fish will appear!
+
+    + That sounds like a great legend!
+        -> StartSecret
+
+
+=== BadAnswer ===
+
+That's not good to hear... How about a little legend to cheer you up? I've liked it since I was a kid! It's the most beautiful fish in the world 'Elaine'. In the legends they say that this fish was so beautiful, they symbolized it with love! They are rarely seen in the water, but they say that this fish will appear, when the village is about to get together!
+
+    + Sounds like a great legend!
+        -> StartSecret
+
+
+=== StartSecret ===
+
+# completeQuest CarolineSecretQuestStart
+# addQuest CarolineSecretQuest
+
+I hope I'll see an 'Elaine' one day. But the best thing would be if a specific person would bring it to me! That would mean a lot to me!
+
+    -> END
+
+
+=== FinishSecret ===
+
+Hey Ethan! How can I help you?
+
+    + {completable_carolinesecretquest} I've found something very special to you!
+        -> FinishSecretQuest
+    + Just wanted to check on you.
+        -> CheckCarolineTwo
+    
+
+=== FinishSecretQuest ===
+
+Oh my god! You caught an 'Elaine'? I never would have thought that they actually exist! Thank you so much for this experience, I appreciate it a whole lot! I have one more thing to ask though!
+
+    + What is it?
+        -> Favour
+
+
+=== CheckCarolineTwo ===
+
+Nawww, that's so sweet!
+
+    -> END
+
+
+=== Favour ===
+
+Would you mind sitting next to me during Nosh-Up? I would really appreciate it!
+
+    + Sure, sounds like fun!
+        -> Promise
+
+
+=== Promise ===
+
+# completeQuest CarolineSecretQuest
+
+Hooray! That's a promise! See you there! a
 
     -> END

@@ -24,6 +24,8 @@ public class ShakingTree : MonoBehaviour
     [SerializeField] private Image finishedScreen;
 
     [SerializeField] private Button testButton;
+
+    private PlayerInput playerInput;
     
     private uint _amount = 3;
 
@@ -39,6 +41,7 @@ public class ShakingTree : MonoBehaviour
     
     private void Awake()
     {
+        playerInput = FindObjectOfType<PlayerInput>();
         gameObject.SetActive(false);
         //DestroyOldGame();
         startButton.onClick.AddListener(StartGame);
@@ -65,13 +68,13 @@ public class ShakingTree : MonoBehaviour
     public void OpenGame()
     {
         //Animation
+        playerInput.currentActionMap = playerInput.actions.FindActionMap("UI");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        FindObjectOfType<PlayerInput>().enabled = false;
         
         gameObject.SetActive(value: true);
         shakingMeter.value = _timer;
-        finishedScreen.gameObject.SetActive(value: false);
+        finishedScreen.gameObject.SetActive(value: false);  
         winScreen.gameObject.SetActive(value: false);
         loseScreen.gameObject.SetActive(value: false);
         Debug.Log(_amount);
@@ -93,9 +96,9 @@ public class ShakingTree : MonoBehaviour
 
     private void CloseGame()
     {
+        playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        FindObjectOfType<PlayerInput>().enabled = true;
         gameObject.SetActive(false);
         _isRunning = false;
         _timer = 4.0f;

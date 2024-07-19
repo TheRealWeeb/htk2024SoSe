@@ -9,8 +9,14 @@ VAR completed_chipstrawberryplanting = false
 VAR completable_chipstrawberrywatering = false
 VAR completed_chipstrawberrywatering = false
 VAR completable_carolinestart = false
+VAR completed_gotobed = false
+VAR completable_chiptalktwo = false
+
 
 {
+    
+    - completed_gotobed == true && completable_chiptalktwo == true:
+        -> WateringNextDay
     - completed_chipstart == true && completable_chipstrawberrytalk == true:
         -> StartPlanting
     - completable_chipstrawberryplanting == true && completed_chipstrawberryplanting == false:
@@ -134,6 +140,7 @@ Alright! Oh, one more thing! I've heard that Caroline needs help with something.
 === HelpCaroline ===
 
 # addQuest CarolineStart
+# addQuest GoToBed
 
 Yes! She is at her house, it's between my house and the horse carriage!
 
@@ -143,6 +150,7 @@ Yes! She is at her house, it's between my house and the horse carriage!
 === DontHelpCaroline ===
 
 # addQuest CarolineStart
+# addQuest GoToBed
 
 No problem, I know that you may have your own things to take care of first. If you find the time for it, she currently is in her house. It's the one between my house and the horse carriage.
 
@@ -151,10 +159,50 @@ No problem, I know that you may have your own things to take care of first. If y
 
 === ThankingForHelp ===
 
-Thank you again for helping me! Remember to water them tomorrow to be able to harvest then on the day of Nosh-Up!
+Thank you again for helping me! Remember to water them tomorrow to be able to harvest them on the day of Nosh-Up!
 
     -> END
 
+
+=== WateringNextDay ===
+
+Hey Ethan, thank you again for watering the strawberries yesterday! Don't forget to water them today to be able to harvest them tomorrow!
+
+    -> DarcyAndKato
+
+
+=== DarcyAndKato ===
+
+I think that Darcy and Mayor Kato need help with something, because they looked worried this morning. Maybe you could go and check on them.
+
+    + Sure thing!
+        -> HelpDarcyAndKato
+    + Maybe later.
+        -> DontHelpDarcyAndKato
+
+
+=== HelpDarcyAndKato ===
+
+# completeQuest ChipTalkTwo
+# addQuest ChipStrawberryWateringTwo
+# addQuest DarcyTalk
+# addQuest KatoTalk
+
+Thank you! Darcy is currently next to the horse carriage and Mayor Kato is next to his house, it's the one in front of my house.
+
+    -> END
+
+
+=== DontHelpDarcyAndKato ===
+
+# completeQuest ChipTalkTwo
+# addQuest ChipStrawberryWateringTwo
+# addQuest DarcyTalk
+# addQuest KatoTalk
+
+That's alright! If you have time, go check on them. Darcy is currently next to the horse carriage and Mayor Kato is in his house which is in front of my house.
+
+    -> END
 
 
 

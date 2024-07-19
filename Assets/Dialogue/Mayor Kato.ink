@@ -75,6 +75,8 @@ Don't you remember? It's our yearly meal we enjoy together as one village since 
 
 
 === StartHelping ===
+
+# completeQuest Introduction
 # addQuest chipstart
 
 Thank you so much, Ethan! You could start by helping Chip out. He is just around the corner of his parents' house. Their home is located at the end of the pathway.

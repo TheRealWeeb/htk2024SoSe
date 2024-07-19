@@ -35,6 +35,8 @@ public class PauseMenu : MonoBehaviour
 
     private Fishing fishing;
 
+    private StoryView storyView;
+
     private void Awake()
     {
         pausePanel.SetActive(false);
@@ -44,6 +46,7 @@ public class PauseMenu : MonoBehaviour
         backButton.onClick.AddListener(CloseOptionsMenu);
         playerInput = FindObjectOfType<PlayerInput>();
         fishing = FindObjectOfType<Fishing>(includeInactive: true);
+        storyView = FindObjectOfType<StoryView>(includeInactive: true);
     }
 
     private void Update()
@@ -72,6 +75,10 @@ public class PauseMenu : MonoBehaviour
                 break;
             case 3:
                 fishing.CloseFishing();
+                panelNavigation = 0;
+                break;
+            case 4:
+                storyView.CloseStory();
                 panelNavigation = 0;
                 break;
         }

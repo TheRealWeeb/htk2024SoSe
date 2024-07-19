@@ -23,12 +23,6 @@ public class QuestLogView : MonoBehaviour
         }
 
         var activeQuests = GameState.GetActiveQuests();
-        if (activeQuests.Count == 0)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
-        
         foreach (var quest in activeQuests)
         {
             if (quest.Status == GameState.QuestStatus.Completed)

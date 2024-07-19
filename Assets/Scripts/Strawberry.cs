@@ -2,50 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using DefaultNamespace;
+using StarterAssets;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Strawberry : MonoBehaviour, IInteractable
 {
-    [SerializeField] private GameObject wateredPanel;
-    [SerializeField] private TextMeshProUGUI wateredText;
+    [SerializeField] private GameObject wateringCan;
     [SerializeField] private ItemType requiredItem;
     [SerializeField] private uint requiredAmount;
     [SerializeField] private ItemType reward;
     [SerializeField] private uint amount;
     [SerializeField] private ItemType requiredItemTwo;
     [SerializeField] private uint requiredAmountTwo;
+    [SerializeField] private ItemType requiredItemThree;
+    [SerializeField] private uint requiredAmountThree;
+    [SerializeField] private GameObject strawberrySeed;
+    [SerializeField] private GameObject wateredStrawberrySeed;
+    [SerializeField] private GameObject grownStrawberry;
 
+    private PlayerInput playerInput;
+    
+    private Animator animator;
+    
     private float timer = 2f;
 
-    private bool watered;
-
-    private bool showWatered = false;
+    private bool isWatered = false;
 
     private bool isPlanted = false;
 
     private void Awake()
     {
-        wateredPanel.SetActive(false);
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            PlayerPrefs.SetInt("WateredCrop", 0);
-        }
-        
-        watered = PlayerPrefs.GetInt("WateredCrop") == 1;
-        
-        if (watered)
-        {
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        }
+        playerInput = FindObjectOfType<PlayerInput>();
+        animator = FindObjectOfType<ThirdPersonController>().GetComponent<Animator>();
+        wateringCan.SetActive(false);
     }
 
-    private void Update()
-    {
-        Timer();
-    }
+    
     public void Interact()
     {
         if (!isPlanted)
@@ -54,38 +50,49 @@ public class Strawberry : MonoBehaviour, IInteractable
             {
                 isPlanted = true;
                 GameState.AddItem(reward, amount);
+                StartCoroutine("IsPlanting");
             }
         }
-        else
+        else if (isPlanted && isWatered == false)
         {
             if (GameState.HasEnoughItems(requiredItemTwo, requiredAmountTwo))
             {
                 GameState.AddItem(reward, amount);
-                PlayerPrefs.SetInt("WateredCrop", 1);
                 gameObject.GetComponent<Collider>().enabled = false;
-                GameState.AddItem(reward, amount);
+                StartCoroutine("IsWatering");
+                isWatered = true;
                 QuestSystem.UpdateQuests();
             }
         }
-        
-     
-        // wateredPanel.SetActive(true);
-        // showWatered = true;
+        else if (isPlanted && isWatered)
+        {
+            if (GameState.HasEnoughItems(requiredItemThree, requiredAmountThree))
+            {
+                GameState.AddItem(reward, amount);
+            }
+        }
     }
 
-    private void Timer()
+    IEnumerator IsPlanting()
     {
-        if (showWatered)
-        {
-            timer -= Time.deltaTime;
-        }
+        playerInput.enabled = false;
+        animator.SetBool("isPlanting", true);
+        yield return new WaitForSeconds(3.125f);
+        playerInput.enabled = true;
+        animator.SetBool("isPlanting", false);
+        strawberrySeed.SetActive(true);
+    }
 
-        if (timer <= 0)
-        {
-            timer = 2f;
-            showWatered = false;
-            wateredPanel.SetActive(false);
-            wateredText.gameObject.SetActive(false);
-        }
+    IEnumerator IsWatering()
+    {
+        playerInput.enabled = false;
+        animator.SetBool("isWatering", true);
+        wateringCan.SetActive(true);
+        yield return new WaitForSeconds(3.167f);
+        playerInput.enabled = true;
+        animator.SetBool("isWatering", false);
+        wateringCan.SetActive(false);
+        strawberrySeed.SetActive(false);
+        wateredStrawberrySeed.SetActive(true);
     }
 }

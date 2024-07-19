@@ -36,6 +36,7 @@ namespace DefaultNamespace
                 instance._items[type] += amount;
             }
 
+            Debug.Log(type + "added");
             QuestSystem.UpdateQuests();
         }
 
@@ -75,6 +76,20 @@ namespace DefaultNamespace
             }
 
             return false;
+        }
+
+        public static bool IsQuestCompleted(IQuest quest)
+        {
+            var instance = FindObjectOfType<GameState>();
+            var match = instance._questStates.Find(q => q.Quest.GetId() == quest.GetId());
+            if (match.Status == QuestStatus.Completed)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static void StartQuest(IQuest quest)
