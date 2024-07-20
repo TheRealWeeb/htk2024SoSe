@@ -7,15 +7,19 @@ VAR completable_carolinefishing = false
 VAR completable_carolinesecretquest = false
 VAR completed_carolinesecretqueststart = false
 VAR completable_carolinesecretqueststart = false
+VAR completable_helpfromcaroline = false
+VAR completed_helpfromcaroline = false
 
 
 {
+    - completable_helpfromcaroline == true || completed_carolinestart == false:
+        -> FirstTalk
+    - completed_helpfromcaroline == true:
+        -> ApplePieLater
     - completable_carolinesecretquest == true || completed_carolinesecretqueststart == true:
         -> FinishSecret
     - completable_carolinesecretqueststart == true:
         -> SecretQuest
-    - completed_carolinestart == false:
-        -> FirstTalk
     - completable_carolinefishing == true:
         -> FinishQuest
 }
@@ -25,6 +29,8 @@ VAR completable_carolinesecretqueststart = false
 
 Oh, hey Ethan! What a surprise! What brings you here?
 
++ {completable_helpfromcaroline} Darcy told me that you can make an apple pie.
+    -> ApplePie
 + {completable_carolinestart} Chip told me that you have a problem.
     -> TellProblem
 + Never mind.
@@ -162,4 +168,28 @@ Would you mind sitting next to me during Nosh-Up? I would really appreciate it!
 
 Hooray! That's a promise! See you there! a
 
+    -> END
+
+
+=== ApplePie ===
+
+Yes, I can bake an excellent apple pie just hand me over the apples!
+
+    + Here!
+        -> Apples
+
+
+=== Apples ===
+
+# completeQuest HelpFromCaroline
+
+Perfect! I'll bring you the apple pie at the start of Nosh-Up! See you there!
+
+    + See you there!
+        -> END
+    
+
+=== ApplePieLater ===
+
+Hey Ethan, I'll bring you the apple pie at the start of Nosh-Up!
     -> END

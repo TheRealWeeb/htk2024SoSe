@@ -22,6 +22,8 @@ public class Strawberry : MonoBehaviour, IInteractable
     [SerializeField] private uint requiredAmountThree;
     [SerializeField] private GameObject strawberrySeed;
     [SerializeField] private GameObject wateredStrawberrySeed;
+    [SerializeField] private GameObject strawberryStem;
+    [SerializeField] private GameObject wateredStrawberryStem;
     [SerializeField] private GameObject grownStrawberry;
 
     private PlayerInput playerInput;
@@ -34,11 +36,18 @@ public class Strawberry : MonoBehaviour, IInteractable
 
     private bool isPlanted = false;
 
+    private bool isWateredAgain = false;
+
     private void Awake()
     {
         playerInput = FindObjectOfType<PlayerInput>();
         animator = FindObjectOfType<ThirdPersonController>().GetComponent<Animator>();
         wateringCan.SetActive(false);
+        strawberrySeed.SetActive(false);
+        wateredStrawberrySeed.SetActive(false);
+        strawberryStem.SetActive(false);
+        wateredStrawberrySeed.SetActive(false);
+        grownStrawberry.SetActive(false);
     }
 
     
@@ -58,17 +67,19 @@ public class Strawberry : MonoBehaviour, IInteractable
             if (GameState.HasEnoughItems(requiredItemTwo, requiredAmountTwo))
             {
                 GameState.AddItem(reward, amount);
-                gameObject.GetComponent<Collider>().enabled = false;
                 StartCoroutine("IsWatering");
                 isWatered = true;
                 QuestSystem.UpdateQuests();
             }
         }
-        else if (isPlanted && isWatered)
+        else if (isPlanted && isWatered && isWateredAgain == false)
         {
             if (GameState.HasEnoughItems(requiredItemThree, requiredAmountThree))
             {
                 GameState.AddItem(reward, amount);
+                StartCoroutine("IsWateringAgain");
+                isWateredAgain = true;
+                QuestSystem.UpdateQuests();
             }
         }
     }
@@ -93,6 +104,19 @@ public class Strawberry : MonoBehaviour, IInteractable
         animator.SetBool("isWatering", false);
         wateringCan.SetActive(false);
         strawberrySeed.SetActive(false);
+        wateredStrawberrySeed.SetActive(true);
+    }
+
+    IEnumerator IsWateringAgain()
+    {
+        playerInput.enabled = false;
+        animator.SetBool("isWatering", true);
+        wateringCan.SetActive(true);
+        yield return new WaitForSeconds(3.167f);
+        playerInput.enabled = true;
+        animator.SetBool("isWatering", false);
+        wateringCan.SetActive(false);
+        strawberryStem.SetActive(false);
         wateredStrawberrySeed.SetActive(true);
     }
 }

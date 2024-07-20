@@ -21,3 +21,5 @@ MonoBehaviour:
   isHidden: 0
   endScreenPrefab: {fileID: 0}
   teleportTarget: {fileID: 0}
+  colliderTarget: {fileID: 8960746418414355826, guid: e44c912832a5bd24792ff857792162f7,
+    type: 3}

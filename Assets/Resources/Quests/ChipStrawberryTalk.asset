@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: ChipStrawberryTalk
   m_EditorClassIdentifier: 
-  displayName: Go talk to Chip next to your garden!
+  displayName: Talk to Chip next to your garden!
   requirements: []
   reward: {fileID: 11400000, guid: 134321be5d2e66b4e911da5df2c2329d, type: 2}
   amount: 1

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: CarolineStart
   m_EditorClassIdentifier: 
-  displayName: Go and talk to Caroline!
+  displayName: Talk to Caroline!
   requirements: []
-  rewards: []
+  reward: {fileID: 0}
+  amount: 0
   isHidden: 0
   endScreenPrefab: {fileID: 0}
+  teleportTarget: {fileID: 0}

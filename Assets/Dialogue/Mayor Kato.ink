@@ -2,9 +2,11 @@ EXTERNAL addQuest(questName)
 #speaker: MayorKato
 VAR completable_chipstart = false
 VAR completed_chipstart = false
-
+VAR completed_chipstrawberrywatering = false
 
 {
+    - completed_chipstrawberrywatering == true:
+        -> ThankYouForHelping
     - completable_chipstart == true:
         -> AcceptedQuest
     - completable_chipstart == false && completed_chipstart == false:
@@ -86,4 +88,10 @@ Thank you so much, Ethan! You could start by helping Chip out. He is just around
 === DoNotHelp ===
 
 That's alright, I know that you have your own things to worry about as well.
+    -> END
+
+
+=== ThankYouForHelping ===
+
+Hey Ethan! Thank you for helping us out, it means a lot to us!
     -> END

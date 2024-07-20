@@ -11,10 +11,21 @@ VAR completed_chipstrawberrywatering = false
 VAR completable_carolinestart = false
 VAR completed_gotobed = false
 VAR completable_chiptalktwo = false
+VAR completed_chiptalktwo = false
+VAR completable_chiptalkthree = false
+VAR completed_gotobedtwo = false
+VAR completable_chipstrawberrywateringtwo = false
 
 
 {
-    
+    - completed_chipstrawberrywateringtwo == true:
+        -> SeeYouTomorrow
+    - completable_chipstrawberrywateringtwo == true:
+        -> ThanksForWateringAgain
+    - completed_chiptalktwo == true:
+        -> ReminderWateringTwo
+    - completed_gotobedtwo == true && completable_chiptalkthree == true:
+        -> HarvestingStrawberry
     - completed_gotobed == true && completable_chiptalktwo == true:
         -> WateringNextDay
     - completed_chipstart == true && completable_chipstrawberrytalk == true:
@@ -25,10 +36,10 @@ VAR completable_chiptalktwo = false
         -> TellWait
     - completed_chipstrawberryplanting == true:
         -> ReminderWatering
+    - completed_chipstrawberrywatering == true:
+        -> ThankingForHelp
     - completed_chipstrawberrytalk == true:
         -> ReminderPlanting
-    - completable_carolinestart == true:
-        -> ThankingForHelp
     - completed_chipstart == false:
         -> StartQuest
 }
@@ -168,43 +179,82 @@ Thank you again for helping me! Remember to water them tomorrow to be able to ha
 
 Hey Ethan, thank you again for watering the strawberries yesterday! Don't forget to water them today to be able to harvest them tomorrow!
 
-    -> DarcyAndKato
+    + I will do that!
+        -> Darcy
 
 
-=== DarcyAndKato ===
+=== Darcy ===
 
-I think that Darcy and Mayor Kato need help with something, because they looked worried this morning. Maybe you could go and check on them.
+I think that Darcy needs help with something, because she looked worried this morning. Maybe you could go and check on her.
 
     + Sure thing!
-        -> HelpDarcyAndKato
+        -> HelpDarcy
     + Maybe later.
-        -> DontHelpDarcyAndKato
+        -> DontHelpDarcy
 
 
-=== HelpDarcyAndKato ===
-
-# completeQuest ChipTalkTwo
-# addQuest ChipStrawberryWateringTwo
-# addQuest DarcyTalk
-# addQuest KatoTalk
-
-Thank you! Darcy is currently next to the horse carriage and Mayor Kato is next to his house, it's the one in front of my house.
-
-    -> END
-
-
-=== DontHelpDarcyAndKato ===
+=== HelpDarcy ===
 
 # completeQuest ChipTalkTwo
 # addQuest ChipStrawberryWateringTwo
 # addQuest DarcyTalk
-# addQuest KatoTalk
 
-That's alright! If you have time, go check on them. Darcy is currently next to the horse carriage and Mayor Kato is in his house which is in front of my house.
+Thank you! Darcy is currently next to the horse carriage.
 
     -> END
 
 
+=== DontHelpDarcy ===
+
+# completeQuest ChipTalkTwo
+# addQuest ChipStrawberryWateringTwo
+# addQuest DarcyTalk
+
+That's alright! If you have time, go check on them. Darcy is currently next to the horse carriage.
+
+    -> END
 
 
+=== HarvestingStrawberry ===
 
+Thank you Ethan for helping me with those strawberries! I'm very happy that they turned out great. Could you harvest them and bring them to me please?
+
+    + Yes, I can do that!
+        -> ThankingForHarvesting
+    + Maybe later.
+        -> MaybeLater
+
+
+=== MaybeLater ===
+
+That's oke, just don't forget them!
+    -> END
+
+
+=== ThankingForHarvesting ===
+
+# completeQuest ChipTalkThree
+# addQuest ChipStrawberryWateringTwo
+
+Great! I'm looking forward to this year's Nosh-Up, it's gonna be fun! And one more thing, Mayor Kato was looking for you earlier, he told me that he'll be waiting for you at the big table!
+    -> END
+
+
+=== ReminderWateringTwo ===
+
+Don't forget to water the strawberries today, Ethan!
+    -> END
+
+
+=== ThanksForWateringAgain ===
+
+# completeQuest ChipStrawberryWateringTwo
+
+Thank you so much, Ethan! I'll see you tomorrow for the harvest!
+    -> END
+
+
+=== SeeYouTomorrow ===
+
+See you tomorrow, Ethan!
+    -> END

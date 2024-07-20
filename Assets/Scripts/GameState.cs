@@ -161,6 +161,7 @@ namespace DefaultNamespace
                 npc.transform.position = teleportTarget.transform.position;
             }
         }
+            
         
         public static void MarkQuestCompletable(IQuest quest)
         {

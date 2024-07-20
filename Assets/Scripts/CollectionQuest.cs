@@ -13,6 +13,7 @@ public class CollectionQuest : ScriptableObject, IQuest
     public bool isHidden;
     public GameObject endScreenPrefab;
     public GameObject teleportTarget;
+    public GameObject colliderTarget;
 
     public string GetId()
     {
@@ -48,6 +49,7 @@ public class CollectionQuest : ScriptableObject, IQuest
     {
         return teleportTarget;
     }
+    
 
     [Serializable]
     public class ItemRequirement

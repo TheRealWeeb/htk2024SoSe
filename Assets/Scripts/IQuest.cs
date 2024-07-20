@@ -11,4 +11,5 @@ public interface IQuest
     ItemType GetReward();
     uint GetRewardAmount();
     GameObject Teleport();
+    
 }

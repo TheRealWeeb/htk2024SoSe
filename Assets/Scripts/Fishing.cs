@@ -11,6 +11,8 @@ using Vector3 = System.Numerics.Vector3;
 
 public class Fishing : MonoBehaviour
 {
+    [SerializeField] private GameObject fishingRod;
+    
     [SerializeField] private GameObject inGameCanvas;
     
     [SerializeField] private GameObject thePlayer;
@@ -79,6 +81,7 @@ public class Fishing : MonoBehaviour
     
     private void Awake()
     {
+        fishingRod.SetActive(false);
         playerInput = FindObjectOfType<PlayerInput>();
         animator = FindObjectOfType<ThirdPersonController>().GetComponent<Animator>();
         fishingPanel.SetActive(false);
@@ -114,6 +117,7 @@ public class Fishing : MonoBehaviour
 
     public void OpenFishing()
     {
+        fishingRod.SetActive(true);
         fishingPanel.SetActive(true);
         guide.gameObject.SetActive(true);
         startButton.gameObject.SetActive(true);
@@ -131,6 +135,7 @@ public class Fishing : MonoBehaviour
 
     public void CloseFishing()
     {
+        fishingRod.SetActive(false);
         fishingPanel.SetActive(false);
         guide.gameObject.SetActive(false);
         waitForFish.gameObject.SetActive(false);
@@ -171,6 +176,12 @@ public class Fishing : MonoBehaviour
         tryAgainButton.gameObject.SetActive(false);
         loseImage.gameObject.SetActive(true);
         tryAgainButton.gameObject.SetActive(true);
+        
+        animator.SetBool("isBiting", false);
+        animator.SetBool("isApproaching", false);
+        animator.SetBool("isCatching", false);
+        animator.SetBool("fishLost", false);
+        animator.SetBool("fishCaught", false);
         
         timer = 30f;
         isSpawning = false;
@@ -300,6 +311,7 @@ public class Fishing : MonoBehaviour
 
     private void LoseGame()
     {
+        fishingRod.SetActive(false);
         pullButton.gameObject.SetActive(false);
         tryAgainButton.gameObject.SetActive(true);
         doPull.gameObject.SetActive(false);
@@ -309,8 +321,21 @@ public class Fishing : MonoBehaviour
         isCatching = false;
         isPulling = false;
         animator.SetBool("fishLost", true);
+        StartCoroutine("ShowFIshingRod");
+        animator.SetBool("isBiting", false);
+        animator.SetBool("isApproaching", false);
+        animator.SetBool("isCatching", false);
+        animator.SetBool("fishCaught", false);
         
         timer = 30f;
+    }
+
+    IEnumerator ShowFishingRod()
+    {
+        fishingRod.SetActive(false);
+        yield return new WaitForSeconds(1.667f);
+        fishingRod.SetActive(true);
+        animator.SetBool("fishLost", false);
     }
 
     private void WinGame()
@@ -326,6 +351,10 @@ public class Fishing : MonoBehaviour
         isCatching = false;
         isPulling = false;
         animator.SetBool("fishCaught", true);
+        animator.SetBool("isBiting", false);
+        animator.SetBool("isApproaching", false);
+        animator.SetBool("isCatching", false);
+        animator.SetBool("fishLost", false);
 
         GameState.AddItem(type, amount);
     }
