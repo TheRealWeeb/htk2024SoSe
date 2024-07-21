@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: GoToBedTwo
   m_EditorClassIdentifier: 
-  displayName: 
-  requirements: []
-  reward: {fileID: 11400000, guid: 60b4ac2d4a5968c4898a0e4fcf827b15, type: 2}
-  amount: 2
+  displayName: Go to your house to start the next day!
+  requirements:
+  - type: {fileID: 11400000, guid: 60b4ac2d4a5968c4898a0e4fcf827b15, type: 2}
+    amount: 1
+  reward: {fileID: 0}
+  amount: 0
   isHidden: 0
   endScreenPrefab: {fileID: 0}
   teleportTarget: {fileID: 0}

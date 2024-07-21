@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: ChipStrawberryWatering
   m_EditorClassIdentifier: 
-  displayName: Go to your garden and water the strawberry seeds!
+  displayName: Water the strawberry seeds!
   requirements:
   - type: {fileID: 11400000, guid: ece7b76e9c649fb41bb275611394575d, type: 2}
     amount: 2

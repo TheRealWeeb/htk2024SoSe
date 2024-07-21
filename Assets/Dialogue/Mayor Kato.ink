@@ -3,8 +3,14 @@ EXTERNAL addQuest(questName)
 VAR completable_chipstart = false
 VAR completed_chipstart = false
 VAR completed_chipstrawberrywatering = false
+VAR completable_noshup = false
+VAR completable_endquest = false
 
 {
+    - completable_endquest == true:
+        -> Ending
+    - completable_noshup == true:
+        -> ReadyForNoshUp
     - completed_chipstrawberrywatering == true:
         -> ThankYouForHelping
     - completable_chipstart == true:
@@ -94,4 +100,62 @@ That's alright, I know that you have your own things to worry about as well.
 === ThankYouForHelping ===
 
 Hey Ethan! Thank you for helping us out, it means a lot to us!
+    -> END
+
+
+=== ReadyForNoshUp === 
+
+Hello Ethan, what can I do for you?
+
+    + Chip told me that you wanted to see me.
+        -> ReallyReady
+    + Never mind.
+        -> DontWorry
+    
+
+=== DontWorry ===
+
+Don't worry about it!
+    -> END
+
+
+=== ReallyReady ===
+
+That's right! I wanted to ask you, if you are ready for Nosh-Up?
+
+    + Yes, I am!
+        -> Ready
+    + No, not yet.
+        -> NotReady
+
+
+=== Ready ===
+
+# completeQuest NoshUp
+# addQuest EndQuest
+# addQuest GetCaroline
+# addQuest GetChip
+# addQuest GetDarcy
+
+Great! Now you just have to get every villager and tell them, that Nosh-Up is about to start. I'll see you soon with the other villagers!
+    -> END
+
+
+=== NotReady ===
+
+That's alright, just come by and tell me when you're ready!
+    -> END
+
+=== Ending ===
+
+Alright, now that everyone is here... let the festivities... begin! 
+    
+    + Yippie!
+        -> EndingTwo
+
+
+=== EndingTwo ===
+
+# completeQuest EndQuest
+
     -> END

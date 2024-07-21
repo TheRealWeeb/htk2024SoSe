@@ -11,8 +11,13 @@ public class FMODEvents : MonoBehaviour
     
     
     [field: Header("Player SFX")]
-    [field: SerializeField] public EventReference playerFootsteps { get; private set; }
-    
+    [field: SerializeField] public EventReference playerFootstepsGrass { get; private set; }
+    [field: SerializeField] public EventReference plantingStrawberry { get; private set; }
+    [field: SerializeField] public EventReference wateringCan { get; private set; }
+    [field: SerializeField] public EventReference fishBiting { get; private set; }
+    [field: SerializeField] public EventReference fishCaught { get; private set; }
+    [field: SerializeField] public EventReference shakingTree { get; private set; }
+    [field: SerializeField] public EventReference pickUp { get; private set; }
     
     [field: Header("Music")]
     [field: SerializeField] public EventReference music { get; private set; }

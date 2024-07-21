@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: ChipStrawberryWateringTwo
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: Water the strawberries again!
   requirements:
   - type: {fileID: 11400000, guid: ece7b76e9c649fb41bb275611394575d, type: 2}
     amount: 3
   reward: {fileID: 11400000, guid: 60b4ac2d4a5968c4898a0e4fcf827b15, type: 2}
-  amount: 2
+  amount: 1
   isHidden: 0
   endScreenPrefab: {fileID: 0}
   teleportTarget: {fileID: 0}

@@ -11,9 +11,14 @@ public class LocationInteractor : MonoBehaviour
 
     private PlayerInput _playerInput;
 
+    private void Awake()
+    {
+        _playerInput = FindObjectOfType<PlayerInput>();
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (_playerInput.actions["Interact"].WasPressedThisFrame())
         {
             _currentInteractable?.Interact();
         }

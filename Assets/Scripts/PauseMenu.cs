@@ -25,8 +25,6 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] private GameObject dialogueMenu;
 
-    [SerializeField] private GameObject shakingTree;
-
     [SerializeField] private GameObject thePlayer;
 
     private PlayerInput playerInput;
@@ -36,6 +34,8 @@ public class PauseMenu : MonoBehaviour
     private Fishing fishing;
 
     private StoryView storyView;
+
+    private ShakingTree shakingTree;
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (playerInput.actions["Pause"].WasPressedThisFrame() || playerInput.actions["Exit"].WasPressedThisFrame())
         {
             PanelNavigation();
         }
@@ -81,6 +81,10 @@ public class PauseMenu : MonoBehaviour
                 storyView.CloseStory();
                 panelNavigation = 0;
                 break;
+            case 5:
+                shakingTree.CloseGame();
+                panelNavigation = 0;
+                break;
         }
     }
 
@@ -102,6 +106,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
+        panelNavigation = 0;
     }
 
     private void OpenOptionsMenu()
@@ -118,6 +123,7 @@ public class PauseMenu : MonoBehaviour
         pausePanel.SetActive(true);
 
         continueButton.Select();
+        panelNavigation = 1;
     }
 
 }

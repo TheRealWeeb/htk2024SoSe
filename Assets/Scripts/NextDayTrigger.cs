@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class NextDayTrigger : MonoBehaviour, IInteractable
     [SerializeField] private GameObject teleportTarget;
     [SerializeField] private ItemType requiredItem;
     [SerializeField] private uint requiredAmount;
+    [SerializeField] private GameObject fade;
 
     private PlayerInput playerInput;
 
@@ -28,9 +30,12 @@ public class NextDayTrigger : MonoBehaviour, IInteractable
     IEnumerator Teleport()
     {
         playerInput.enabled = false;
-        yield return new WaitForSeconds(0.01f);
+        fade.GetComponent<MeshRenderer>().material.DOFade(1, 3f);
+        yield return new WaitForSeconds(3f);
         player.transform.position = teleportTarget.transform.position;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(1f);
+        fade.GetComponent<MeshRenderer>().material.DOFade(0, 3f);
+        yield return new WaitForSeconds(3f);
         playerInput.enabled = true;
     }
 }

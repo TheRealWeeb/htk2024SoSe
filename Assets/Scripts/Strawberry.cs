@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using DefaultNamespace;
+using FMODUnity;
 using StarterAssets;
 using TMPro;
 using UnityEngine;
@@ -20,12 +21,19 @@ public class Strawberry : MonoBehaviour, IInteractable
     [SerializeField] private uint requiredAmountTwo;
     [SerializeField] private ItemType requiredItemThree;
     [SerializeField] private uint requiredAmountThree;
+    [SerializeField] private ItemType requiredItemFour;
+    [SerializeField] private uint requiredAmountFour;
+    [SerializeField] private ItemType rewardTwo;
+    [SerializeField] private uint amountTwo;
     [SerializeField] private GameObject strawberrySeed;
     [SerializeField] private GameObject wateredStrawberrySeed;
     [SerializeField] private GameObject strawberryStem;
     [SerializeField] private GameObject wateredStrawberryStem;
     [SerializeField] private GameObject grownStrawberry;
-
+    [SerializeField] private EventReference plantingSound;
+    [SerializeField] private EventReference wateringSound;
+    [SerializeField] private EventReference pickUpSound;
+    
     private PlayerInput playerInput;
     
     private Animator animator;
@@ -37,6 +45,8 @@ public class Strawberry : MonoBehaviour, IInteractable
     private bool isPlanted = false;
 
     private bool isWateredAgain = false;
+
+    private bool isHarvested = false;
 
     private void Awake()
     {
@@ -82,12 +92,23 @@ public class Strawberry : MonoBehaviour, IInteractable
                 QuestSystem.UpdateQuests();
             }
         }
+        else if (isHarvested == false && isWateredAgain == true)
+        {
+            if (GameState.HasEnoughItems(requiredItemFour, requiredAmountFour))
+            {
+                GameState.AddItem(rewardTwo, amountTwo);
+                StartCoroutine("IsHarvesting");
+                isHarvested = true;
+                QuestSystem.UpdateQuests();
+            }
+        }
     }
 
     IEnumerator IsPlanting()
     {
         playerInput.enabled = false;
         animator.SetBool("isPlanting", true);
+        AudioManager.instance.PlayOneShot(plantingSound, transform.position);
         yield return new WaitForSeconds(3.125f);
         playerInput.enabled = true;
         animator.SetBool("isPlanting", false);
@@ -98,6 +119,7 @@ public class Strawberry : MonoBehaviour, IInteractable
     {
         playerInput.enabled = false;
         animator.SetBool("isWatering", true);
+        AudioManager.instance.PlayOneShot(wateringSound, transform.position);
         wateringCan.SetActive(true);
         yield return new WaitForSeconds(3.167f);
         playerInput.enabled = true;
@@ -111,12 +133,24 @@ public class Strawberry : MonoBehaviour, IInteractable
     {
         playerInput.enabled = false;
         animator.SetBool("isWatering", true);
+        AudioManager.instance.PlayOneShot(wateringSound, transform.position);
         wateringCan.SetActive(true);
         yield return new WaitForSeconds(3.167f);
         playerInput.enabled = true;
         animator.SetBool("isWatering", false);
         wateringCan.SetActive(false);
         strawberryStem.SetActive(false);
-        wateredStrawberrySeed.SetActive(true);
+        wateredStrawberryStem.SetActive(true);
+    }
+
+    IEnumerator IsHarvesting()
+    {
+        playerInput.enabled = false;
+        animator.SetBool("isPickingUp", true);
+        AudioManager.instance.PlayOneShot(pickUpSound, transform.position);
+        yield return new WaitForSeconds(1.333f);
+        playerInput.enabled = true;
+        animator.SetBool("isPickingUp", false);
+        grownStrawberry.SetActive(false);
     }
 }

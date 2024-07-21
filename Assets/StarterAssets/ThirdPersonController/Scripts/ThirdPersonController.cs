@@ -126,7 +126,9 @@ namespace StarterAssets
         }
 
         //audio
-        private EventInstance playerFootsteps;
+        private EventInstance playerFootstepsGrass;
+
+        
         
         private void Awake()
         {
@@ -156,7 +158,7 @@ namespace StarterAssets
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
 
-            playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps);
+            playerFootstepsGrass = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootstepsGrass);
         }
 
         private void Update()
@@ -396,23 +398,26 @@ namespace StarterAssets
             }
         }
 
+        
         private void UpdateSound()
         {
             if (_speed != 0 && Grounded)
             {
                 PLAYBACK_STATE playbackState;
-                playerFootsteps.getPlaybackState(out playbackState);
+                playerFootstepsGrass.getPlaybackState(out playbackState);
 
                 if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
                 {
-                    playerFootsteps.start();
+                    playerFootstepsGrass.start();
                 }
             }
 
             else
             {
-                playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
+                playerFootstepsGrass.stop(STOP_MODE.ALLOWFADEOUT);
             }
+            
+            
         }
     }
 }

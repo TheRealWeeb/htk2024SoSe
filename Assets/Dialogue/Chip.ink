@@ -15,17 +15,33 @@ VAR completed_chiptalktwo = false
 VAR completable_chiptalkthree = false
 VAR completed_gotobedtwo = false
 VAR completable_chipstrawberrywateringtwo = false
+VAR completed_chipstrawberrywateringtwo = false
+VAR completed_chiptalkthree = false
+VAR completable_chipstrawberryharvest = false
+VAR completed_chipstrawberryharvest = false
+VAR completable_getchip = false
+VAR completed_getchip = false
 
 
 {
-    - completed_chipstrawberrywateringtwo == true:
-        -> SeeYouTomorrow
+    - completed_getchip == true:
+        -> CantWait
+    - completable_getchip == true:
+        -> GetChip
+    - completed_chipstrawberryharvest == true:
+        -> SeeYouAtNoshUp
+    - completable_chipstrawberryharvest == true:
+        -> ThanksForHarvest
+    - completed_chiptalkthree == true:
+        -> ReminderHarvesting
     - completable_chipstrawberrywateringtwo == true:
         -> ThanksForWateringAgain
-    - completed_chiptalktwo == true:
-        -> ReminderWateringTwo
     - completed_gotobedtwo == true && completable_chiptalkthree == true:
         -> HarvestingStrawberry
+    - completed_chipstrawberrywateringtwo == true:
+        -> SeeYouTomorrow
+    - completed_chiptalktwo == true:
+        -> ReminderWateringTwo
     - completed_gotobed == true && completable_chiptalktwo == true:
         -> WateringNextDay
     - completed_chipstart == true && completable_chipstrawberrytalk == true:
@@ -234,7 +250,8 @@ That's oke, just don't forget them!
 === ThankingForHarvesting ===
 
 # completeQuest ChipTalkThree
-# addQuest ChipStrawberryWateringTwo
+# addQuest ChipStrawberryHarvest
+# addQuest NoshUp
 
 Great! I'm looking forward to this year's Nosh-Up, it's gonna be fun! And one more thing, Mayor Kato was looking for you earlier, he told me that he'll be waiting for you at the big table!
     -> END
@@ -249,6 +266,7 @@ Don't forget to water the strawberries today, Ethan!
 === ThanksForWateringAgain ===
 
 # completeQuest ChipStrawberryWateringTwo
+# addQuest GoToBedTwo
 
 Thank you so much, Ethan! I'll see you tomorrow for the harvest!
     -> END
@@ -257,4 +275,49 @@ Thank you so much, Ethan! I'll see you tomorrow for the harvest!
 === SeeYouTomorrow ===
 
 See you tomorrow, Ethan!
+    -> END
+
+
+=== ReminderHarvesting ===
+
+Don't forget to harvest the strawberries!
+    -> END
+
+
+=== ThanksForHarvest ===
+
+# completeQuest ChipStrawberryHarvest
+
+Thank you for harvesting the strawberries, Ethan! I'll be seeing you at Nosh-Up later today!
+    -> END
+
+
+=== SeeYouAtNoshUp ===
+
+See you at Nosh-Up, Ethan!
+    -> END
+
+
+=== GetChip ===
+
+Hey Ethan, what can I do for you?
+
+    + Nosh-Up is about to start!
+        -> NoshUp
+    + Just wanted to check on you.
+        -> TellingMood
+
+
+=== NoshUp ===
+
+# completeQuest GetChip
+# teleport GetChip
+
+Great! I'll be on my way then!
+    -> END
+
+
+=== CantWait === 
+
+I can't wait for the fun Nosh-Up brings every year!
     -> END

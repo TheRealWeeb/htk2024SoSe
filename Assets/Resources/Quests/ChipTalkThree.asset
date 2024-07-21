@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Talk to Chip!
   requirements: []
-  reward: {fileID: 0}
-  amount: 0
+  reward: {fileID: 11400000, guid: 46163d1ffa57b7b4b8ccbd378aeb86f8, type: 2}
+  amount: 1
   isHidden: 0
   endScreenPrefab: {fileID: 0}
   teleportTarget: {fileID: 0}

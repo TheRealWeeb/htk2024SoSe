@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using StarterAssets;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HorseTeleport : MonoBehaviour, IInteractable
 {
@@ -10,11 +12,13 @@ public class HorseTeleport : MonoBehaviour, IInteractable
     
     [SerializeField] private GameObject thePlayer;
 
-    private ThirdPersonController playerController;
+    [SerializeField] private GameObject fade;
+
+    private PlayerInput playerInput;
 
     private void Start()
     {
-        playerController = thePlayer.GetComponent<ThirdPersonController>();
+        playerInput = thePlayer.GetComponent<PlayerInput>();
     }
     
     public void Interact()
@@ -25,11 +29,14 @@ public class HorseTeleport : MonoBehaviour, IInteractable
 
     IEnumerator Teleport()
     {
-        playerController.disabled = true;
-        yield return new WaitForSeconds(0.01f);
+        playerInput.enabled = false;
+        fade.GetComponent<MeshRenderer>().material.DOFade(1, 3f);
+        yield return new WaitForSeconds(3f);
         thePlayer.transform.position = teleportTarget.transform.position;
-        yield return new WaitForSeconds(0.01f);
-        playerController.disabled = false;
+        yield return new WaitForSeconds(1f);
+        fade.GetComponent<MeshRenderer>().material.DOFade(0, 3f);
+        yield return new WaitForSeconds(3f);
+        playerInput.enabled = true;
     }
 
 }

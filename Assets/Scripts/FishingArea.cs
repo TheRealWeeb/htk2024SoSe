@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FishingArea : MonoBehaviour, IInteractable
 {
+    [SerializeField] private GameObject fishingArea;
     public void Interact()
     {
         var fishingGame = FindObjectOfType<Fishing>(includeInactive: true);
@@ -12,7 +13,7 @@ public class FishingArea : MonoBehaviour, IInteractable
             return;
         }
 
-        fishingGame.OpenFishing();
+        fishingGame.OpenFishing(fishingArea);
         Debug.Log("Go.");
     }
 }

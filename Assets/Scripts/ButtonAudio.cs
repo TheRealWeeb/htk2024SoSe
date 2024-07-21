@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonAuido : MonoBehaviour
+public class ButtonAudio : MonoBehaviour
 {
     public void NavigationSound()
     {

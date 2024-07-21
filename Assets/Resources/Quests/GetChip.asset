@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
-  m_Name: CarolineSecretQuest
+  m_Name: GetChip
   m_EditorClassIdentifier: 
-  displayName: '[Secret Quest] Bring Caroline an Elaine!'
-  requirements:
-  - type: {fileID: 11400000, guid: 0e224165c613e354da41f7fa1e0b0092, type: 2}
-    amount: 1
-  reward: {fileID: 0}
-  amount: 0
+  displayName: Get Chip!
+  requirements: []
+  reward: {fileID: 11400000, guid: c31317fbc39ce6548a482adc5ef9cdf5, type: 2}
+  amount: 1
   isHidden: 0
   endScreenPrefab: {fileID: 0}
-  teleportTarget: {fileID: 0}
+  teleportTarget: {fileID: 8067115039676340356, guid: 77b2f856dbbae4c4ea61b98ad6440810,
+    type: 3}
+  colliderTarget: {fileID: 0}

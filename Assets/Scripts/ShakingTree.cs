@@ -38,12 +38,15 @@ public class ShakingTree : MonoBehaviour
     public ItemType type;
 
     public uint amount;
+
+    private PauseMenu pauseMenu;
     
     private void Awake()
     {
         playerInput = FindObjectOfType<PlayerInput>();
         gameObject.SetActive(false);
         //DestroyOldGame();
+        pauseMenu = FindObjectOfType<PauseMenu>();
         startButton.onClick.AddListener(StartGame);
         testButton.onClick.AddListener(AddTimer);
         backButton.onClick.AddListener(CloseGame);
@@ -59,10 +62,21 @@ public class ShakingTree : MonoBehaviour
             _timer -= Time.deltaTime;
         }
 
-        else if (_isRunning && Input.GetKeyDown(KeyCode.E))
+        if (playerInput.actions["Minigame"].WasPressedThisFrame() && _isRunning)
         {
-            _timer += addedTimerAmount;
+            AddTimer();
         }
+        
+        switch (_timer)
+        {
+            case <= 0:
+                LoseGame();
+                break;
+            case >= 40:
+                WinGame();
+                break;
+        }
+        
     }
     
     public void OpenGame()
@@ -80,6 +94,7 @@ public class ShakingTree : MonoBehaviour
         Debug.Log(_amount);
 
         testButton.interactable = false;
+        pauseMenu.panelNavigation = 5;
 
         if (_amount > 0)
         {
@@ -94,7 +109,7 @@ public class ShakingTree : MonoBehaviour
         }
     }
 
-    private void CloseGame()
+    public void CloseGame()
     {
         playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
         Cursor.visible = false;
@@ -102,6 +117,7 @@ public class ShakingTree : MonoBehaviour
         gameObject.SetActive(false);
         _isRunning = false;
         _timer = 4.0f;
+        pauseMenu.panelNavigation = 0;
     }
     
     private void StartGame()
@@ -122,6 +138,7 @@ public class ShakingTree : MonoBehaviour
         testButton.interactable = false;
         
         GameState.AddItem(type, amount);
+        _timer = 40f;
     }
 
     private void LoseGame()
@@ -131,20 +148,14 @@ public class ShakingTree : MonoBehaviour
         loseScreen.gameObject.SetActive(true);
         
         testButton.interactable = false;
+
+        _timer = 0f;
     }
 
     private void AddTimer()
     {
         _timer += addedTimerAmount;
         
-        switch (_timer)
-        {
-            case <= 0:
-                LoseGame();
-                break;
-            case >= 40:
-                WinGame();
-                break;
-        }
+        
     }
 }

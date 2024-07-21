@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61afcdc2f190a4a4f8a3d85e038e1a15, type: 3}
   m_Name: DarcyApplePie
   m_EditorClassIdentifier: 
-  displayName: Go make an apple pie!
+  displayName: Get three apples!
   requirements:
   - type: {fileID: 11400000, guid: 955a694eaf6c3294f943f69d8316f44e, type: 2}
     amount: 3
+  reward: {fileID: 0}
+  amount: 0
   isHidden: 0
   endScreenPrefab: {fileID: 0}
+  teleportTarget: {fileID: 0}
+  colliderTarget: {fileID: 0}

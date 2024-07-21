@@ -8,7 +8,7 @@ namespace DefaultNamespace
     public class GameState : MonoBehaviour
     {
         private readonly Dictionary<ItemType, uint> _items = new();
-        private readonly List<QuestState> _questStates = new();
+        public readonly List<QuestState> _questStates = new();
 
         public struct QuestState
         {

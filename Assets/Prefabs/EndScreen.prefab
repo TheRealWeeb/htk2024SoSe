@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 29}
   m_SizeDelta: {x: 721.497, y: 182.856}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4488541615671530926
@@ -144,8 +144,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Thanks for playing!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d746e0f26eccff04483a4523332ccf64, type: 2}
+  m_sharedMaterial: {fileID: -7734562995809781544, guid: d746e0f26eccff04483a4523332ccf64,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 32
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -312,7 +313,7 @@ PrefabInstance:
     - target: {fileID: 8856816646641068133, guid: b90d63a4675e3854fb768e5d6617896e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -250
+      value: -217
       objectReference: {fileID: 0}
     - target: {fileID: 8856816646641068133, guid: b90d63a4675e3854fb768e5d6617896e,
         type: 3}

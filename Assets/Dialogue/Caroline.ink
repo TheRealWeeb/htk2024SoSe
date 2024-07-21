@@ -9,17 +9,23 @@ VAR completed_carolinesecretqueststart = false
 VAR completable_carolinesecretqueststart = false
 VAR completable_helpfromcaroline = false
 VAR completed_helpfromcaroline = false
+VAR completable_getcaroline = false
+VAR completed_getcaroline = false
+VAR completed_carolinefishing = false
 
 
 {
+
+    - completed_getcaroline == true:
+        -> CantWait
+    - completable_getcaroline == true:
+        -> FirstTalk
     - completable_helpfromcaroline == true || completed_carolinestart == false:
         -> FirstTalk
     - completed_helpfromcaroline == true:
         -> ApplePieLater
-    - completable_carolinesecretquest == true || completed_carolinesecretqueststart == true:
-        -> FinishSecret
-    - completable_carolinesecretqueststart == true:
-        -> SecretQuest
+    - completed_carolinefishing == true:
+        -> ThanksForHelp
     - completable_carolinefishing == true:
         -> FinishQuest
 }
@@ -29,12 +35,20 @@ VAR completed_helpfromcaroline = false
 
 Oh, hey Ethan! What a surprise! What brings you here?
 
++ {completable_getcaroline} Nosh-Up is about to start!
+    -> NoshUp
 + {completable_helpfromcaroline} Darcy told me that you can make an apple pie.
     -> ApplePie
 + {completable_carolinestart} Chip told me that you have a problem.
     -> TellProblem
 + Never mind.
     -> NeverMind
+
+
+=== ThanksForHelp ===
+
+Hey Ethan! Thank you again for helping me with my dish!
+    -> END
 
 
 === FinishQuest ===
@@ -63,12 +77,21 @@ That's so sweet of you, Ethan! I'm doing great, thank you for asking!
 
 === TellProblem ===
 
- Yes, that's right! The thing is, I want to make a fish filet for Nosh-Up, but I don't know how to fish any fish. That's where you come into play. Could you fish up four fish for me on the beach? It doesn't have to be done today, another day is fine as long as I can get that meal done before Nosh-Up begins!
+ Yes, that's right! The thing is, I want to make a fish filet for Nosh-Up, but I don't know how to fish any fish. That's where you come into play.
 
-+ Sure, I can do that for you!
-    -> AcceptQuest
-+ Maybe later.
-    -> NotAcceptQuest
++ What should I do?
+    -> AcceptQuestOne
+
+
+=== AcceptQuestOne ===
+
+Could you fish up four fish for me on the beach? It doesn't have to be done today, another day is fine as long as I can get that meal done before Nosh-Up begins!
+
+    + Sure, I can do that!
+        -> AcceptQuest
+    + Maybe later.
+        -> NotAcceptQuest
+
 
 
 === AcceptQuest ===
@@ -192,4 +215,19 @@ Perfect! I'll bring you the apple pie at the start of Nosh-Up! See you there!
 === ApplePieLater ===
 
 Hey Ethan, I'll bring you the apple pie at the start of Nosh-Up!
+    -> END
+
+
+=== NoshUp ===
+
+# completeQuest GetCaroline
+# teleport GetCaroline
+
+Fantastic! I hope I'll see you there soon!
+    -> END
+
+
+=== CantWait ===
+
+I can't wait for it to start soon!
     -> END

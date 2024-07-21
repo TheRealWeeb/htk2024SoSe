@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using DG.Tweening;
+using FMODUnity;
 using StarterAssets;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -47,6 +49,13 @@ public class Fishing : MonoBehaviour
 
     [SerializeField] private Image loseImage;
 
+    [SerializeField] private Transform teleportTarget;
+    
+    [SerializeField] private GameObject fade;
+
+    [SerializeField] private EventReference bitingSound;
+    [SerializeField] private EventReference catchSound;
+
     private PlayerInput playerInput;
 
     private Animator animator;
@@ -78,6 +87,8 @@ public class Fishing : MonoBehaviour
     public ItemType type;
 
     public uint amount = 4;
+
+    private GameObject fishingNpc;
     
     private void Awake()
     {
@@ -115,13 +126,27 @@ public class Fishing : MonoBehaviour
         fishingMeter.value = timer;
     }
 
-    public void OpenFishing()
+    public void OpenFishing(GameObject fishingArea)
     {
+        fishingNpc = fishingArea;
         fishingRod.SetActive(true);
         fishingPanel.SetActive(true);
         guide.gameObject.SetActive(true);
         startButton.gameObject.SetActive(true);
-        
+        StartCoroutine("StartFishing");
+    }
+
+    IEnumerator StartFishing()
+    {
+        playerInput.enabled = false;
+        fade.GetComponent<MeshRenderer>().material.DOFade(1, 3f);
+        yield return new WaitForSeconds(3f);
+        thePlayer.transform.position = teleportTarget.transform.position;
+        thePlayer.transform.rotation = teleportTarget.transform.rotation;
+        yield return new WaitForSeconds(1f);
+        fade.GetComponent<MeshRenderer>().material.DOFade(0, 3f);
+        yield return new WaitForSeconds(3f);
+        playerInput.enabled = true;
         playerInput.currentActionMap = playerInput.actions.FindActionMap("UI");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -132,11 +157,10 @@ public class Fishing : MonoBehaviour
 
         pauseMenu.panelNavigation = 3;
     }
-
     public void CloseFishing()
     {
         fishingRod.SetActive(false);
-        fishingPanel.SetActive(false);
+        
         guide.gameObject.SetActive(false);
         waitForFish.gameObject.SetActive(false);
         fishApproaching.gameObject.SetActive(false);
@@ -149,16 +173,31 @@ public class Fishing : MonoBehaviour
         pullButton.gameObject.SetActive(false);
         tryAgainButton.gameObject.SetActive(false);
 
-        playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Locked;
+        StartCoroutine("StopFishing");
+        
         animator.SetBool("isFishing", false);
         animator.SetBool("isBiting", false);
         animator.SetBool("isApproaching", false);
         animator.SetBool("isCatching", false);
         animator.SetBool("fishLost", false);
         animator.SetBool("fishCaught", false);
-        //pauseMenu.panelNavigation = 0;
+        pauseMenu.panelNavigation = 0;
+    }
+
+    IEnumerator StopFishing()
+    {
+        playerInput.enabled = false;
+        fade.GetComponent<MeshRenderer>().material.DOFade(1, 3f);
+        yield return new WaitForSeconds(3f);
+        thePlayer.transform.position = fishingNpc.transform.position;
+        yield return new WaitForSeconds(1f);
+        fade.GetComponent<MeshRenderer>().material.DOFade(0, 3f);
+        yield return new WaitForSeconds(3f);
+        fishingPanel.SetActive(false);
+        playerInput.enabled = true;
+        playerInput.currentActionMap = playerInput.actions.FindActionMap("Player");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void ResetFishing()
@@ -232,6 +271,7 @@ public class Fishing : MonoBehaviour
         {
             canFish = true;
             animator.SetBool("isBiting", true);
+            AudioManager.instance.PlayOneShot(bitingSound, transform.position);
             fishApproaching.gameObject.SetActive(false);
             canCatch.gameObject.SetActive(true);
         }
@@ -321,7 +361,7 @@ public class Fishing : MonoBehaviour
         isCatching = false;
         isPulling = false;
         animator.SetBool("fishLost", true);
-        StartCoroutine("ShowFIshingRod");
+        StartCoroutine("ShowFishingRod");
         animator.SetBool("isBiting", false);
         animator.SetBool("isApproaching", false);
         animator.SetBool("isCatching", false);
@@ -340,6 +380,7 @@ public class Fishing : MonoBehaviour
 
     private void WinGame()
     {
+        AudioManager.instance.PlayOneShot(catchSound, transform.position);
         winImage.gameObject.SetActive(true);
         doPull.gameObject.SetActive(false);
         doNotPull.gameObject.SetActive(false);

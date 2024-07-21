@@ -4,8 +4,14 @@ VAR completable_darcyapplepie = false
 VAR completable_darcytalk = false
 VAR completed_darcytalk = false
 VAR completed_darcyapplepie = false
+VAR completable_getdarcy = false
+VAR completed_getdarcy = false
 
 {
+    - completed_getdarcy == true:
+        -> HappyForNoshUp
+    - completable_getdarcy == true:
+        -> FirstDialogue
     - completed_darcyapplepie == true:
         -> ReminderCaroline
     - completed_darcytalk == true:
@@ -18,6 +24,8 @@ VAR completed_darcyapplepie = false
 
 Hello dear, how can I help you?
 
+    + {completable_getdarcy} Nosh-Up is about to start!
+        -> GetDarcy
     + {completable_darcyapplepie} I got the apples for your apple pie!
         -> ContinueQuest
     + {completable_darcytalk} I've heard from Chip that you are worried about something.
@@ -38,7 +46,7 @@ Oh, did he notice that? Well, what can I say, I've gotten to old to make my favo
 
 === CheckDarcy ===
 
-That's too sweet of you, dear! Old Darcy is doing just fine.
+That's so sweet of you, dear! Old Darcy is doing just fine.
 
     -> END
 
@@ -98,4 +106,19 @@ That's great, dear! But I'm sorry to tell you that I'm not capable of making the
 
 Hello dear, I hope Caroline will be able to make the apple pie before Nosh-Up starts...
 
+    -> END
+
+
+=== GetDarcy ===
+
+# completeQuest GetDarcy
+# teleport GetDarcy
+
+Is that so? Well, I'll be on my way then!
+    -> END
+
+
+=== HappyForNoshUp ===
+
+Oh dear, I'm so happy to be able to witness another Nosh-Up!
     -> END

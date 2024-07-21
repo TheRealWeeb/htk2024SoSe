@@ -111,6 +111,7 @@ public class StoryView : MonoBehaviour
       Cursor.lockState = CursorLockMode.Locked;
       gameObject.SetActive(false);
       normalHudGroup.SetActive(true);
+      pauseMenu.panelNavigation = 0;
    }
 
    private void ShowStory()

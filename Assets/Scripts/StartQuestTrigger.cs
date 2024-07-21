@@ -22,6 +22,8 @@ public class StartQuestTrigger : MonoBehaviour
             GameState.StartQuest(quest);
             FindObjectOfType<QuestLogView>(true).ShowActiveQuests();
             collider.enabled = false;
+
+            
         }
     }
 }

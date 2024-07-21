@@ -4,9 +4,12 @@ using DefaultNamespace;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 public class Collectable : MonoBehaviour, IInteractable
 {
+   [SerializeField] private EventReference pickUp;
+   
    public ItemType type;
    public uint amount = 1;
 
@@ -30,6 +33,7 @@ public class Collectable : MonoBehaviour, IInteractable
    {
       playerInput.enabled = false;
       animator.SetBool("isPickingUp", true);
+      AudioManager.instance.PlayOneShot(pickUp, transform.position);
       yield return new WaitForSeconds(1.333f);
       playerInput.enabled = true;
       animator.SetBool("isPickingUp", false);
